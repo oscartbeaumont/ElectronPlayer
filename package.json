@@ -1,0 +1,21 @@
+{
+  "name": "netflix",
+  "description": "A Netflix Client For Linux. Written In Electron!",
+  "version": "1.0.0",
+  "author": "Oscar Beaumont <oscartbeaumont@gmail.com>",
+  "main": "main.js",
+  "license": "MIT",
+  "postinstall": "electron-builder install-app-deps",
+  "scripts": {
+    "app": "electron .",
+    "dist": "./build.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "electron-widevinecdm": "^5.0.2"
+  },
+  "devDependencies": {
+    "electron": "^1.7.10",
+    "electron-packager": "^10.1.1"
+  }
+}
