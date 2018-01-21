@@ -8,7 +8,7 @@
   "postinstall": "electron-builder install-app-deps",
   "scripts": {
     "app": "electron .",
-    "dist": "./build.sh",
+    "dist": "chmod +x build.sh && ./build.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
