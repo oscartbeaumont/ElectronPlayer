@@ -1,4 +1,9 @@
 #!/bin/bash
+#Force Root Perms So That System Install Can be Done
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
 #Create The Exported Builds Folder
 rm -rf dist
 mkdir dist
