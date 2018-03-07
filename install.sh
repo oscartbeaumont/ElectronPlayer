@@ -8,7 +8,7 @@ npm install
 os=`uname`
 if [[ "$os" == "Linux" ]]; then
    echo "Install Netflix Electron To Your Linux System!"
-   electron-packager . Netflix --platform=linux --arch=x64 --version=1.0.0
+   npm run package-linux
    mv Netflix-linux-x64/ dist/linux/
    rm -rf Netflix-linux-x64
    #Install To The System
@@ -19,7 +19,7 @@ if [[ "$os" == "Linux" ]]; then
   echo "Netflix Has Been Installed To The System. Start It By Running 'netflix' In Your Terminal!"
 elif [[ "$os" == "Darwin" ]]; then
    echo "Installing Netflix Electron To Your MacOS System!"
-   electron-packager . Netflix --platform=darwin --arch=x64 --version=1.0.0
+   npm run package-mac
    mv Netflix-darwin-x64/Netflix.app dist/Netflix.app
    rm -rf Netflix-darwin-x64
    #Install To The System
