@@ -10,6 +10,7 @@
     "app": "electron .",
     "package-mac": "electron-packager . Netflix --platform=darwin --arch=x64 --version=1.0.0",
     "package-linux": "electron-packager . Netflix --platform=linux --arch=x64 --version=1.0.0",
+    "package-windows": "electron-packager . Netflix --platform=win32 --arch=x64 --version=1.0.0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
