@@ -1,23 +1,26 @@
 {
   "name": "netflix",
-  "description": "A Netflix Client For Linux. Written In Electron!",
+  "description": "A Netflix Client Written In Electron!",
   "version": "1.0.0",
   "author": "Oscar Beaumont <oscartbeaumont@gmail.com>",
   "main": "main.js",
   "license": "MIT",
-  "postinstall": "electron-builder install-app-deps",
   "scripts": {
-    "app": "electron .",
-    "package-mac": "electron-packager . Netflix --platform=darwin --arch=x64 --version=1.0.0",
-    "package-linux": "electron-packager . Netflix --platform=linux --arch=x64 --version=1.0.0",
-    "package-windows": "electron-packager . Netflix --platform=win32 --arch=x64 --version=1.0.0",
+    "start": "electron .",
+    "setup-env-mac": "brew install fakeroot wine",
+    "build": "npm run package-mac && npm run package-windows && npm run package-linux && npm run package-debian",
+    "package-mac": "electron-packager . Netflix --overwrite --icon=assets/icon.icns --platform=darwin --arch=x64 --version=1.0.0 --out=dist",
+    "package-linux": "electron-packager . Netflix --overwrite --icon=assets/icon.png --asar --platform=linux --arch=x64 --version=1.0.0 --out=dist",
+    "package-windows": "electron-packager . Netflix --overwrite --icon=assets/icon.ico --platform=win32 --arch=x64 --version=1.0.0 --out=dist && node createWindowsinstaller.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "electron": "^1.7.10",
     "electron-widevinecdm": "^5.0.2"
   },
   "devDependencies": {
-    "electron": "^1.7.10",
-    "electron-packager": "^10.1.1"
+    "electron-installer-debian": "^0.8.1",
+    "electron-packager": "^10.1.1",
+    "electron-winstaller": "^2.6.4"
   }
 }
