@@ -1,26 +1,70 @@
 {
-  "name": "netflix",
-  "description": "A Netflix Client Written In Electron!",
+  "name": "Netflix",
+  "description": "A Desktop App For Netflix Wirtten Using Electron.",
+  "author": "Oscar Beaumont",
   "version": "1.0.0",
-  "author": "Oscar Beaumont <oscartbeaumont@gmail.com>",
-  "main": "main.js",
   "license": "MIT",
   "scripts": {
-    "start": "electron .",
-    "setup-env-mac": "brew install fakeroot wine",
-    "build": "npm run package-mac && npm run package-windows && npm run package-linux && npm run package-debian",
-    "package-mac": "electron-packager . Netflix --overwrite --icon=assets/icon.icns --platform=darwin --arch=x64 --version=1.0.0 --out=dist",
-    "package-linux": "electron-packager . Netflix --overwrite --icon=assets/icon.png --asar --platform=linux --arch=x64 --version=1.0.0 --out=dist",
-    "package-windows": "electron-packager . Netflix --overwrite --icon=assets/icon.ico --platform=win32 --arch=x64 --version=1.0.0 --out=dist && node createWindowsinstaller.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "dev": "electron-webpack dev",
+    "compile": "electron-webpack",
+    "dist": "yarn compile && electron-builder -mwl",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
-    "electron": "^1.7.10",
-    "electron-widevinecdm": "^5.0.2"
+    "electron-widevinecdm": "^7.0.0",
+    "source-map-support": "^0.5.5"
   },
   "devDependencies": {
-    "electron-installer-debian": "^0.8.1",
-    "electron-packager": "^10.1.1",
-    "electron-winstaller": "^2.6.4"
+    "electron": "^2.0.4",
+    "electron-builder": "^20.11.1",
+    "electron-webpack": "^2.0.1",
+    "mocha": "^5.2.0",
+    "spectron": "^3.8.0",
+    "webpack": "^4.8.1"
+  },
+  "resolutions": {
+    "webpack-sources": "1.0.1"
+  },
+  "build": {
+    "appId": "me.otbeaumont.${name}",
+    "mac": {
+      "category": "public.app-category.entertainment"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "7z",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "publish": [
+        "github"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "linux": {
+      "category": "Video",
+      "target": [
+        "AppImage",
+        "snap"
+      ],
+      "publish": [
+        "github"
+      ]
+    }
   }
 }
