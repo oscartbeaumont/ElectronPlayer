@@ -10,9 +10,6 @@
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder -mwl",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
-    "dist:windows": "electron-builder -w",
-    "dist:mac": "electron-builder -m",
-    "dist:linux": "electron-builder -l"
   },
   "dependencies": {
     "electron-widevinecdm": "^7.0.0",
@@ -30,7 +27,7 @@
     "webpack-sources": "1.0.1"
   },
   "build": {
-    "appId": "me.otbeaumont.${name}",
+    "appId": "me.otbeaumont.Netflix",
     "mac": {
       "category": "public.app-category.entertainment"
     },
