@@ -10,12 +10,11 @@ branches:
 before_install:
   - brew update
   - brew install wine mono
-  - "export DISPLAY=:99.0"
   
 script:
 - yarn compile
-- yarn test
 - yarn dist
+- yarn test
 
 cache:
   directories:
