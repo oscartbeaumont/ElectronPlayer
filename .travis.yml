@@ -1,5 +1,4 @@
 language: node_js
-
 node_js: "8"
 
 os:
@@ -7,9 +6,10 @@ os:
   - osx
 
 before_install:
-  - "if [[ \"$TRAVIS_OS_NAME\" == \"osx\" ]]; then brew install wine mono; fi"
-  
-jobs:
- include:
-   - stage: Compile The Application
-     script: yarn dist
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install wine mono; fi
+
+script:
+- yarn compile
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn dist:mac; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then yarn dist:linux; fi
