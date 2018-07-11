@@ -32,10 +32,7 @@
       "category": "public.app-category.entertainment"
     },
     "win": {
-      "title": "Netflix",
-      "version": "1.0.0.0",
-      "msi": true,
-      "authors": "Oscar Beaumont"
+      "target": "msi"
     },
     "linux": {
       "category": "Video",
