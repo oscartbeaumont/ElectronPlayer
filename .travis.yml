@@ -3,18 +3,19 @@ node_js: "8"
 
 os: "osx"
 
-branches:
-  only:
-    - master
+osx_image: xcode9.0
+
+sudo: required
+dist: trusty
 
 before_install:
   - brew update
   - brew cask install xquartz
   - brew install wine mono
-  
+
 script:
-- yarn dist
-- yarn test
+  - yarn dist
+  - yarn test
 
 cache:
   directories:
