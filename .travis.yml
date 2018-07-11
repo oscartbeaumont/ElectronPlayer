@@ -7,11 +7,9 @@ os:
   - osx
 
 before_install:
- - if [[ "$TRAVIS_OS_NAME" == "osx" ]];
- -   brew install wine mono
- - fi
-
- jobs:
-  include:
-    - stage: Compile The Application
-      script: yarn dist
+  - "if [[ \"$TRAVIS_OS_NAME\" == \"osx\" ]]; then brew install wine mono; fi"
+  
+jobs:
+ include:
+   - stage: Compile The Application
+     script: yarn dist
