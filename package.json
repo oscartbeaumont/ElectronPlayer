@@ -9,7 +9,9 @@
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder -mwl",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "dist:mac": "electron-builder -m",
+    "dist:linux": "electron-builder -l"
   },
   "dependencies": {
     "electron-widevinecdm": "^7.0.0",
