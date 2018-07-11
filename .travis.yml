@@ -47,5 +47,5 @@ before_script:
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then yarn dist:linux; fi
-  - if [[ "$TRAVIS_OS_NAME" == "mac" ]]; then yarn dist:mac; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn dist:mac; fi
   - yarn test
