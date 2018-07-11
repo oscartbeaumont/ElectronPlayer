@@ -9,10 +9,10 @@ branches:
 
 before_install:
   - brew update
-  - brew install wine winetricks mono
+  - brew cask install xquartz
+  - brew install wine mono
   
 script:
-- yarn compile
 - yarn dist
 - yarn test
 
