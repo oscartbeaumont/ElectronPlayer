@@ -10,6 +10,7 @@
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder -mwl",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "dist:windows": "electron-builder -w"
     "dist:mac": "electron-builder -m",
     "dist:linux": "electron-builder -l"
   },
@@ -63,9 +64,6 @@
       "target": [
         "AppImage",
         "snap"
-      ],
-      "publish": [
-        "github"
       ]
     }
   }
