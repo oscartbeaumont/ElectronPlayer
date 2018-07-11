@@ -8,8 +8,8 @@
     "test": "mocha",
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder -mwl",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
+    "dist": "yarn compile && electron-builder --publish onTagOrDraft",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",   
     "release": "yarn compile && electron-builder"
   },
   "dependencies": {
