@@ -5,7 +5,6 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "mocha",
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder --publish onTagOrDraft",
@@ -22,8 +21,6 @@
     "electron": "^2.0.4",
     "electron-builder": "^20.11.1",
     "electron-webpack": "^2.0.1",
-    "mocha": "^5.2.0",
-    "spectron": "^3.8.0",
     "webpack": "^4.8.1"
   },
   "resolutions": {
