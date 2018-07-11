@@ -32,30 +32,11 @@
       "category": "public.app-category.entertainment"
     },
     "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        },
-        {
-          "target": "7z",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ],
-      "publish": [
-        "github"
-      ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
-    },
+      "title": "Netflix",
+      "version": "1.0.0.0",
+      "msi": true,
+      "authors": "Oscar Beaumont"
+    }
     "linux": {
       "category": "Video",
       "target": [
