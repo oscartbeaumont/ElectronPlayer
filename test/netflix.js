@@ -7,7 +7,7 @@ describe('Application Launch', function () {
 
   beforeEach(function () {
     this.app = new Application({
-      path: path.join(__dirname, "../dist/linux-unpacked/Netflix"), //"../dist/mac/Netflix.app/Contents/MacOS/Netflix"),
+      path: path.join(__dirname, "../dist/mac/Netflix.app/Contents/MacOS/Netflix"),
       args: [path.join(__dirname, '..')]
     });
     return this.app.start();
