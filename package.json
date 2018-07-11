@@ -10,7 +10,9 @@
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder --publish onTagOrDraft",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",   
-    "release": "yarn compile && electron-builder"
+    "dist:linux": "yarn compile && electron-builder -l --publish onTagOrDraft",
+    "dist:mac": "yarn compile && electron-builder -m --publish onTagOrDraft",
+    "dist:windows": "yarn compile && electron-builder -w --publish onTagOrDraft"
   },
   "dependencies": {
     "electron-widevinecdm": "^7.0.0",
