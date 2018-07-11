@@ -9,7 +9,7 @@ branches:
 
 before_install:
   - brew update
-  - brew install wine mono
+  - brew install wine winetricks mono
   
 script:
 - yarn compile
