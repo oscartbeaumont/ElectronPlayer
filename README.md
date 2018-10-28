@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/oscartbeaumont/Netflix-Desktop.svg?branch=master)](https://travis-ci.org/oscartbeaumont/Netflix-Desktop)
 # Netflix Desktop
 A Desktop App (Bassicly A Wrapper) For Netflix Wirtten Using Electron. This Application Supports Windows (.msi), MacOS (.app) and Linux (Binary in Folder).
 
