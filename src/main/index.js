@@ -14,6 +14,7 @@ let mainWindow;
 const SETTING_CONTROLS = 'controls';
 const SETTING_NO_CONTROLS = 'no-controls';
 const SETTING_FLOAT = 'float';
+const SETTING_CURRENT_URL = 'current-url';
 
 function createMainWindow() {
   let config = {
@@ -75,6 +76,49 @@ function createMainWindow() {
     checked: settings.get(SETTING_NO_CONTROLS, false)
   })
 
+  const WebsiteChangeMenu = new MenuItem({
+    label: 'Visit website',
+    type: 'submenu',
+    submenu: [
+      new MenuItem({
+        label: 'Netflix',
+        click() {
+          settings.set(SETTING_CURRENT_URL, 'https://netflix.com/browse')
+          window.loadURL(settings.get(SETTING_CURRENT_URL))
+        }
+      }),
+      new MenuItem({
+        label: 'YouTube',
+        click() {
+          settings.set(SETTING_CURRENT_URL, 'https://youtube.com')
+          window.loadURL(settings.get(SETTING_CURRENT_URL))
+        }
+      }),
+      new MenuItem({
+        label: 'Hulu',
+        click() {
+          settings.set(SETTING_CURRENT_URL, 'https://hulu.com')
+          window.loadURL(settings.get(SETTING_CURRENT_URL))
+        }
+      }),
+      new MenuItem({
+        label: 'Twitch',
+        click() {
+          settings.set(SETTING_CURRENT_URL, 'https://www.twitch.tv/')
+          window.loadURL(settings.get(SETTING_CURRENT_URL))
+        }
+      }),
+      new MenuItem({
+        label: 'FloatPlane',
+        click() {
+          settings.set(SETTING_CURRENT_URL, 'https://www.floatplane.com/')
+          window.loadURL(settings.get(SETTING_CURRENT_URL))
+        }
+      })
+    ],
+
+  })
+
   const template = [
     {
       label: 'View',
@@ -98,7 +142,8 @@ function createMainWindow() {
         {role: 'close'},
         ToggleFloat,
         ToggleTitleMenu,
-        ToggleNoTitleMenu
+        ToggleNoTitleMenu,
+        WebsiteChangeMenu
       ]
     },
     {
@@ -111,7 +156,7 @@ function createMainWindow() {
 
   Menu.setApplicationMenu(menu)
 
-  window.loadURL("https://netflix.com/browse");
+  window.loadURL(settings.get(SETTING_CURRENT_URL, "https://netflix.com/browse"));
 
   window.on('closed', () => {
     mainWindow = null;
