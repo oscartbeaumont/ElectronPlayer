@@ -116,7 +116,6 @@ function createMainWindow() {
         }
       })
     ],
-
   })
 
   const template = [
@@ -163,8 +162,34 @@ function createMainWindow() {
   });
 
   window.webContents.on('did-finish-load', function () {
-    console.log('Loading done')
-    window.webContents.insertCSS('body { -webkit-app-region: drag !important; }')
+
+    // This bit here is a bit of a hack to ensure we'll always be able to move the page even if the native website doesn't wan't us to.
+    // language=JavaScript
+    window.webContents.executeJavaScript(`
+    const CONTAINER_ID = '__electron-controller__custom-thing'
+    const findElement = () => {
+      let element = document.getElementById(CONTAINER_ID);
+      if (element === null) {
+        return null;
+      }
+      return element;
+    }
+    let thingToLoop = () => {
+      element = findElement();
+
+      if (element === null) {
+        let container = document.createElement('div');
+        container.id = CONTAINER_ID
+        document.body.prepend(container);
+        element = findElement();
+      }
+
+      element.style = 'position:fixed; top:0; left:0; right: 0; height: 2rem; z-index:99999999;-webkit-app-region: drag;cursor: -webkit-grab;'
+    };
+    // Initial run to trigger everything
+    thingToLoop()
+    setInterval(thingToLoop, 5000)
+    `);
   })
 
   if (process.env.NODE_ENV !== 'production') {
