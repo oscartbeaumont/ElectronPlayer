@@ -1,6 +1,6 @@
 import path from "path";
 
-const HIDDEN_FOLDER_NAME = '.' + process.env.npm_package_name.toLowerCase();
+const HIDDEN_FOLDER_NAME = '.netflix';
 const USER_CONFIG_DIRECTORY_PATH = path.join(require('os').homedir(), HIDDEN_FOLDER_NAME);
 const USER_CONFIG_FILE_NAME = 'config.js';
 const USER_CONFIG_FILE_PATH = path.join(USER_CONFIG_DIRECTORY_PATH, USER_CONFIG_FILE_NAME);
