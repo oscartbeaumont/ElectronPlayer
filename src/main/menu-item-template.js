@@ -30,7 +30,7 @@ export default (window) => {
         click() {
             settings.set(SETTING_CONTROLS, !settings.get(SETTING_CONTROLS, true));
             settings.set(SETTING_NO_CONTROLS, false);
-            ToggleFloat.checked = settings.get(SETTING_CONTROLS, true);
+            ToggleTitleMenu.checked = settings.get(SETTING_CONTROLS, true);
             restartApp();
         },
         checked: settings.get(SETTING_CONTROLS, true)
@@ -42,7 +42,7 @@ export default (window) => {
         click() {
             settings.set(SETTING_NO_CONTROLS, !settings.get(SETTING_NO_CONTROLS, false));
             settings.set(SETTING_CONTROLS, false);
-            ToggleFloat.checked = !settings.get(SETTING_NO_CONTROLS, false);
+            ToggleNoTitleMenu.checked = !settings.get(SETTING_NO_CONTROLS, false);
             restartApp();
         },
         checked: settings.get(SETTING_NO_CONTROLS, false)
