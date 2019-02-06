@@ -101,7 +101,7 @@ function createMainWindow() {
 app.on('window-all-closed', () => {
     // on macOS it is common for applications to stay open until the user explicitly quits
     if (process.platform !== 'darwin') {
-        app.exit(0);
+        app.quit();
     }
 });
 
