@@ -112,6 +112,24 @@ export default (window) => {
                 },
             ]
         },
+
+        {
+            label: 'Edit',
+            submenu: [
+                {
+                    role: 'selectAll'
+                },
+                {
+                    role: 'cut'
+                },
+                {
+                    role: 'copy'
+                },
+                {
+                    role: 'paste'
+                },
+            ]
+        },
         {
             role: 'window',
             submenu: [
