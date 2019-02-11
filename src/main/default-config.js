@@ -15,10 +15,6 @@ module.exports = [
     "url": "https://netflix.com/browse"
   },
   {
-    "label": "Hulu",
-    "url": "https://hulu.com"
-  },
-  {
     "label": "YouTube",
     "url": "https://youtube.com"
   },
