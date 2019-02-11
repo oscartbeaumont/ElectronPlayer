@@ -1,6 +1,6 @@
 'use strict';
 
-import {app, BrowserWindow, Menu, MenuItem} from 'electron'
+import { app, BrowserWindow, Menu, MenuItem } from 'electron'
 import widevine from 'electron-widevinecdm';
 import settings from 'electron-settings';
 
@@ -81,17 +81,6 @@ function createMainWindow() {
             thingToLoop();
             setInterval(thingToLoop, 5000)
         `);
-    });
-
-    if (process.env.NODE_ENV !== 'production') {
-        window.webContents.openDevTools();
-    }
-
-    window.webContents.on('devtools-opened', () => {
-        window.focus();
-        setImmediate(() => {
-            window.focus();
-        });
     });
 
     return window;
