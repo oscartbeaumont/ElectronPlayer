@@ -6,7 +6,7 @@ import {SETTING_CONTROLS, SETTING_NO_CONTROLS, SETTING_FLOAT, SETTING_CURRENT_UR
 import {shell} from 'electron';
 
 const config = userConfig();
-
+let customMenuItemsUnderWindow = [];
 export default (window) => {
     const restartApp = () => {
         app.relaunch();
@@ -24,29 +24,33 @@ export default (window) => {
         checked: settings.get(SETTING_FLOAT, true)
     });
 
-    const ToggleTitleMenu = new MenuItem({
-        label: 'Show window title bar',
-        type: 'checkbox',
-        click() {
-            settings.set(SETTING_CONTROLS, !settings.get(SETTING_CONTROLS, true));
-            settings.set(SETTING_NO_CONTROLS, false);
-            ToggleTitleMenu.checked = settings.get(SETTING_CONTROLS, true);
-            restartApp();
-        },
-        checked: settings.get(SETTING_CONTROLS, true)
-    });
+    if (process.platform === 'darwin') {
+        const ToggleTitleMenu = new MenuItem({
+            label: 'Show window title bar',
+            type: 'checkbox',
+            click() {
+                settings.set(SETTING_CONTROLS, !settings.get(SETTING_CONTROLS, true));
+                settings.set(SETTING_NO_CONTROLS, false);
+                ToggleTitleMenu.checked = settings.get(SETTING_CONTROLS, true);
+                restartApp();
+            },
+            checked: settings.get(SETTING_CONTROLS, true)
+        });
+        customMenuItemsUnderWindow.push(ToggleTitleMenu)
 
-    const ToggleNoTitleMenu = new MenuItem({
-        label: 'Show no window controls',
-        type: 'checkbox',
-        click() {
-            settings.set(SETTING_NO_CONTROLS, !settings.get(SETTING_NO_CONTROLS, false));
-            settings.set(SETTING_CONTROLS, false);
-            ToggleNoTitleMenu.checked = !settings.get(SETTING_NO_CONTROLS, false);
-            restartApp();
-        },
-        checked: settings.get(SETTING_NO_CONTROLS, false)
-    });
+        const ToggleNoTitleMenu = new MenuItem({
+            label: 'Show no window controls',
+            type: 'checkbox',
+            click() {
+                settings.set(SETTING_NO_CONTROLS, !settings.get(SETTING_NO_CONTROLS, false));
+                settings.set(SETTING_CONTROLS, false);
+                ToggleNoTitleMenu.checked = !settings.get(SETTING_NO_CONTROLS, false);
+                restartApp();
+            },
+            checked: settings.get(SETTING_NO_CONTROLS, false)
+        });
+        customMenuItemsUnderWindow.push(ToggleNoTitleMenu)
+    }
 
     const WebsiteChangeMenu = new MenuItem({
         label: 'Visit website',
@@ -59,6 +63,7 @@ export default (window) => {
             }
         })),
     });
+    customMenuItemsUnderWindow.push(WebsiteChangeMenu)
 
     const OpenWebsiteConfig = new MenuItem({
         label: 'Open website config',
@@ -68,13 +73,7 @@ export default (window) => {
         }
     });
 
-    const customMenuItemsUnderWindow = [
-        ToggleFloat,
-        ToggleTitleMenu,
-        ToggleNoTitleMenu,
-        WebsiteChangeMenu,
-        OpenWebsiteConfig
-    ];
+    customMenuItemsUnderWindow.push(OpenWebsiteConfig)
 
     return [
         {
