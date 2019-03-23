@@ -1,11 +1,11 @@
 {
   "name": "Netflix",
-  "description": "A Desktop App For Netflix Wirtten Using Electron.",
-  "author": "Oscar Beaumont",
-  "version": "1.0.0",
+  "description": "A Desktop App For Netflix Written Using Electron.",
+  "author": "Oscar Beaumont <oscar@otbeaumont.me> (https://otbeaumont.me)",
+  "version": "1.0.1",
   "license": "MIT",
   "scripts": {
-    "dev": "electron-webpack dev",
+    "start": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder --publish onTagOrDraft",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
@@ -16,13 +16,13 @@
   "dependencies": {
     "electron-settings": "^3.2.0",
     "electron-widevinecdm": "^7.0.0",
-    "source-map-support": "^0.5.5"
+    "source-map-support": "^0.5.11"
   },
   "devDependencies": {
-    "electron": "^2.0.4",
-    "electron-builder": "^20.11.1",
-    "electron-webpack": "^2.0.1",
-    "webpack": "^4.8.1"
+    "electron": "3.1.7",
+    "electron-builder": "^20.39.0",
+    "electron-webpack": "^2.6.2",
+    "webpack": "^4.29.6"
   },
   "resolutions": {
     "webpack-sources": "1.0.1"
