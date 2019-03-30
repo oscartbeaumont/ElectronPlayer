@@ -1,34 +1,28 @@
 {
-  "name": "Netflix",
-  "description": "A Desktop App For Netflix Written Using Electron.",
-  "author": "Oscar Beaumont <oscar@otbeaumont.me> (https://otbeaumont.me)",
-  "version": "1.0.1",
-  "license": "MIT",
+  "name": "ElectronPlayer",
+  "version": "2.0.0",
+  "description": "An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch, Floatplane And More",
+  "main": "src/main.js",
   "scripts": {
-    "start": "electron-webpack dev",
-    "compile": "electron-webpack",
-    "dist": "yarn compile && electron-builder --publish onTagOrDraft",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null",
-    "dist:linux": "yarn compile && electron-builder -l --publish onTagOrDraft",
-    "dist:mac": "yarn compile && electron-builder -m --publish onTagOrDraft",
-    "dist:windows": "yarn compile && electron-builder -w --publish onTagOrDraft"
+    "start": "electron .",
+    "test": "echo 'TODO: Tests'",
+    "build": "electron-builder -p never"
+  },
+  "repository": "https://github.com/oscartbeaumont/ElectronPlayer.git",
+  "author": "Oscar Beaumont <oscar@otbeaumont.me> (https://otbeaumont.me)",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^3.1.7",
+    "electron-builder": "^20.39.0"
   },
   "dependencies": {
-    "electron-settings": "^3.2.0",
+    "electron-store": "^3.0.0",
     "electron-widevinecdm": "^7.0.0",
-    "source-map-support": "^0.5.11"
-  },
-  "devDependencies": {
-    "electron": "3.1.7",
-    "electron-builder": "^20.39.0",
-    "electron-webpack": "^2.6.2",
-    "webpack": "^4.29.6"
-  },
-  "resolutions": {
-    "webpack-sources": "1.0.1"
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5"
   },
   "build": {
-    "appId": "me.otbeaumont.Netflix",
+    "appId": "me.otbeaumont.ElectronPlayer",
     "mac": {
       "category": "public.app-category.entertainment"
     },
