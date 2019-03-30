@@ -1,50 +1,44 @@
-sudo: true
-
-branches:
-  only:
-    - master
-
-osx_image: xcode8.3
-
 language: node_js
-
-matrix:
-  include:
-    - os: osx
-    - os: linux
-
 node_js:
-  - 8
+  - "11"
+
+os:
+  - linux
+  - osx
+#  - windows # TODO: Enable Once Widevine Package Supports Windows
 
 cache:
   yarn: true
   directories:
     - node_modules
-    - app/node_modules
+    # TODO: Are These Being Used
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
 
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
     packages:
-      - icnsutils
-      - graphicsmagick
-      - xz-utils
-      - xorriso
-      - xvfb
-      - libgnome-keyring-dev
+      - graphviz
 
-install:
-  - yarn
-  - cd app && yarn && cd ..
-  - export DISPLAY=':99.0'
-  - "Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &"
-
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start &
-  - sleep 3
+install: yarn --pure-lockfile
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then yarn dist:linux; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn dist:mac; fi
+  - yarn test
+  - if [ "$TRAVIS_TAG" ]; then yarn build; fi
+
+deploy:
+  - provider: releases
+    api-key: $GH_TOKEN
+    file_glob: true
+    file:
+      - dist/*.dmg
+      - dist/*.AppImage
+    skip_cleanup: true
+    on:
+      tags: true
+  - provider: snap
+    snap: dist/*.snap
+    channel: stable
+    skip_cleanup: true
+    on:
+      tags: true
