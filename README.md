@@ -1,13 +1,21 @@
 # ElectronPlayer
 
-[![Build Status](https://travis-ci.org/oscartbeaumont/ElectronPlayer.svg?branch=master)](https://travis-ci.org/oscartbeaumont/ElectronPlayer)
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-white.svg)](https://snapcraft.io/electronplayer)
+[![Build Status](https://travis-ci.org/oscartbeaumont/ElectronPlayer.svg?branch=master)](https://travis-ci.org/oscartbeaumont/ElectronPlayer)
 
 An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch, Floatplane And More. This is the successor to [Netflix-Desktop](https://github.com/oscartbeaumont/Netflix-Desktop).
 
 ![ElectronPlayer Menu](docs/ElectronPlayer.png)
 
 The main menu interface.
+
+## Features
+
+- Rough Mac Picture in Picture Support (Floating Window, Above All Desktop and Fullscreen Applications)
+- Always On Top Window Option
+- Frameless Window Option
+- Multiple Streaming Services Support (JSON Config to add extra)
+- Remember Open Service
 
 ## Installation
 
