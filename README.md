@@ -48,6 +48,6 @@ yarn start
 - Menubar Transparency Glitch On Mac
 - Netflix breaks when relaunching window (eg. Enabling PIP)
 - Copy and Paste Support
-- Add dragable part to window (Maybe embed extra css on the body)
+- Add a draggable part to the window (Maybe embed extra CSS on the body)
 - App Tests
 - Code Signing (Using Self Signed Cert Possibly)
