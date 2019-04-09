@@ -17,6 +17,18 @@ document.body.innerHTML = `
   </div>
 
   <style>
+  body:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: rgba(52, 52, 52, 0.95);
+    width: 100%;
+    height: 100%;
+    transform: scale(1.1);
+    filter: blur(1px);
+  }
+  
   .electronplayer_spinner {
     display: inline-block;
     position: absolute;

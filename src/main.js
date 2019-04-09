@@ -114,7 +114,8 @@ function createWindow() {
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-app.on("ready", createWindow);
+// The timeout fixes the trasparent background on Linux ???? why
+app.on("ready", () => setTimeout(createWindow, 500));
 
 // Chnage the windows url when told to by the ui
 ipcMain.on("open-url", (e, url) => {

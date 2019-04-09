@@ -1,5 +1,5 @@
 {
-  "name": "ElectronPlayer",
+  "name": "electronplayer",
   "version": "2.0.0",
   "description": "An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch, Floatplane And More",
   "main": "src/main.js",
