@@ -75,7 +75,7 @@ module.exports = (store, mainWindow, app, loaderScript) => {
           checked: store.get("alwaysOnTop")
         },
         {
-          label: "Hide Window Frame",
+          label: "Frameless Window *",
           type: "checkbox",
           click(e) {
             store.set("hideWindowFrame", e.checked);
@@ -98,7 +98,7 @@ module.exports = (store, mainWindow, app, loaderScript) => {
           checked: store.get("windowDetails") ? true : false
         },
         {
-          label: "Picture In Picture (Mac)",
+          label: "Picture In Picture (Mac Only) *",
           type: "checkbox",
           click(e) {
             store.set("pictureInPicture", e.checked);
@@ -106,7 +106,8 @@ module.exports = (store, mainWindow, app, loaderScript) => {
           },
           checked: store.get("pictureInPicture")
             ? store.get("pictureInPicture")
-            : false
+            : false,
+          visible: process.platform === "darwin"
         },
         {
           label: "Default Service",
@@ -142,12 +143,13 @@ module.exports = (store, mainWindow, app, loaderScript) => {
           }
         },
         {
-          label: "Reset all settings",
+          label: "Reset all settings *",
           click() {
             store.clear();
             relaunch(store, mainWindow, app);
           }
-        }
+        },
+        { label: "* Means App Will Restart", enabled: false }
       ]
     },
     {

@@ -10,6 +10,10 @@ const loaderScript = fs.readFileSync(
   path.join(__dirname, "client-loader.js"),
   "utf8"
 );
+const headerScript = fs.readFileSync(
+  path.join(__dirname, "client-header.js"),
+  "utf8"
+);
 
 // Create Global Varibles
 let mainWindow; // Global Windows Object
@@ -29,7 +33,7 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: false,
       plugins: true,
-      preload: path.join(__dirname, "ui", "preload.js")
+      preload: path.join(__dirname, "client-preload.js")
     },
 
     // Window Styling
@@ -55,7 +59,7 @@ function createWindow() {
   }
 
   // Configire Picture In Picture
-  if (store.get("pictureInPicture")) {
+  if (store.get("pictureInPicture") && process.platform === "darwin") {
     app.dock.hide();
     mainWindow.setAlwaysOnTop(true, "floating");
     mainWindow.setVisibleOnAllWorkspaces(true);
@@ -106,6 +110,13 @@ function createWindow() {
     }
   });
 
+  // Inject Header Script On Page Load If In Frameless Window
+  mainWindow.webContents.on("dom-ready", () => {
+    if (store.get("pictureInPicture") || store.get("hideWindowFrame")) {
+      mainWindow.webContents.executeJavaScript(headerScript);
+    }
+  });
+
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -123,6 +134,20 @@ ipcMain.on("open-url", (e, url) => {
   mainWindow.webContents.executeJavaScript(loaderScript, () => {
     mainWindow.webContents.loadURL(url);
   });
+});
+
+// Disable fullscreen when button pressed
+ipcMain.on("exit-fullscreen", e => {
+  if (store.get("pictureInPicture")) {
+    store.delete("pictureInPicture");
+  } else if (store.get("hideWindowFrame")) {
+    store.delete("hideWindowFrame");
+  }
+
+  // Relaunch
+  store.set("relaunchToPage", mainWindow.webContents.getURL());
+  app.relaunch();
+  app.exit();
 });
 
 // Quit when all windows are closed.
