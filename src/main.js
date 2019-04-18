@@ -43,7 +43,6 @@ function createWindow() {
       ? false
       : !store.get("hideWindowFrame"),
     alwaysOnTop: store.get("alwaysOnTop"),
-    skipTaskbar: true,
     toolbar: false,
     backgroundColor: "#00000000"
   });
