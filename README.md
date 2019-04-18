@@ -47,7 +47,5 @@ yarn start
 - Update Widevine Package So Electron Can Be Updated & Tests Can Be Added
 - Menubar Transparency Glitch On Mac
 - Netflix breaks when relaunching window (eg. Enabling PIP)
-- Copy and Paste Support
-- Add a draggable part to the window (Maybe embed extra CSS on the body)
 - App Tests
 - Code Signing (Using Self Signed Cert Possibly)
