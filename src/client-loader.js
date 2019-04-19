@@ -4,7 +4,7 @@
   for pages like Netflix that take a long time to load.
 */
 
-console.log("ElectronPlayer: Injected Loader");
+console.log('ElectronPlayer: Injected Loader');
 
 document.head.innerHTML = `<title>Loading...</title>`;
 

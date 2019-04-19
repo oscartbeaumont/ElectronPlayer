@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro"); /* TODO: Include With The App */
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro'); /* TODO: Include With The App */
 
 body {
   -webkit-app-region: drag; /* TODO: This Window Drag Is Not Working */
@@ -7,7 +7,7 @@ body {
 }
 
 h3 {
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 #root {

@@ -5,11 +5,11 @@ without injecting them into external websites,
 this is done for obvious security benefits.
 */
 
-global.ipc = require("electron").ipcRenderer;
+global.ipc = require('electron').ipcRenderer;
 
 // Prevent Injecting To Another Websites
-if (window.location.protocol == "file:") {
-  global.React = require("react");
-  global.ReactDOM = require("react-dom");
-  global.services = require("electron").remote.getGlobal("services");
+if (window.location.protocol == 'file:') {
+  global.React = require('react');
+  global.ReactDOM = require('react-dom');
+  global.services = require('electron').remote.getGlobal('services');
 }

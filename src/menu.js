@@ -1,17 +1,17 @@
-const { Menu, shell } = require("electron");
-const path = require("path");
+const { Menu, shell } = require('electron');
+const path = require('path');
 
 module.exports = (store, mainWindow, app, loaderScript) => {
   var servicesMenuItems = [];
   var defaultServiceMenuItems = [];
-  var services = store.get("services");
+  var services = store.get('services');
 
   for (var i = 0; i < services.length; i++) {
     let service = services[i];
     servicesMenuItems.push({
       label: service.name,
       click() {
-        console.log("Changing URL To: " + service.url);
+        console.log('Changing URL To: ' + service.url);
         mainWindow.webContents.executeJavaScript(loaderScript, () => {
           mainWindow.webContents.loadURL(service.url);
         });
@@ -19,28 +19,28 @@ module.exports = (store, mainWindow, app, loaderScript) => {
     });
     defaultServiceMenuItems.push({
       label: service.name,
-      type: "checkbox",
+      type: 'checkbox',
       click(e) {
         e.menu.items.forEach(e => {
           e.label == service.name ? null : (e.checked = false);
         });
-        store.set("defaultService", service);
+        store.set('defaultService', service);
       },
-      checked: store.get("defaultService")
-        ? store.get("defaultService").name == service.name
+      checked: store.get('defaultService')
+        ? store.get('defaultService').name == service.name
         : false
     });
   }
 
   return Menu.buildFromTemplate([
     {
-      label: "ElectronPlayer",
+      label: 'ElectronPlayer',
       submenu: [
-        { label: "ElectronPlayer (" + app.getVersion() + ")", enabled: false },
-        { label: "Created By Oscar Beaumont", enabled: false },
+        { label: 'ElectronPlayer (' + app.getVersion() + ')', enabled: false },
+        { label: 'Created By Oscar Beaumont', enabled: false },
         {
-          label: "Quit ElectronPlayer",
-          accelerator: "Command+Q", // TODO: Non Mac Shortcut
+          label: 'Quit ElectronPlayer',
+          accelerator: 'Command+Q', // TODO: Non Mac Shortcut
           click() {
             app.quit();
           }
@@ -48,170 +48,170 @@ module.exports = (store, mainWindow, app, loaderScript) => {
       ]
     },
     {
-      label: "Services",
+      label: 'Services',
       submenu: [
         {
-          label: "Menu",
-          accelerator: "CmdOrCtrl+H",
+          label: 'Menu',
+          accelerator: 'CmdOrCtrl+H',
           click() {
-            console.log("Change To The Menu");
+            console.log('Change To The Menu');
             mainWindow.webContents.executeJavaScript(loaderScript, () => {
-              mainWindow.loadFile("src/ui/index.html");
+              mainWindow.loadFile('src/ui/index.html');
             });
           }
         }
       ].concat(servicesMenuItems)
     },
     {
-      label: "Settings",
+      label: 'Settings',
       submenu: [
         {
-          label: "Always On Top",
-          type: "checkbox",
+          label: 'Always On Top',
+          type: 'checkbox',
           click(e) {
-            store.set("alwaysOnTop", e.checked);
+            store.set('alwaysOnTop', e.checked);
             mainWindow.setAlwaysOnTop(e.checked);
           },
-          checked: store.get("alwaysOnTop")
+          checked: store.get('alwaysOnTop')
         },
         {
-          label: "Frameless Window *",
-          type: "checkbox",
+          label: 'Frameless Window *',
+          type: 'checkbox',
           click(e) {
-            store.set("hideWindowFrame", e.checked);
+            store.set('hideWindowFrame', e.checked);
             relaunch(store, mainWindow, app);
           },
-          checked: store.get("hideWindowFrame")
-            ? store.get("hideWindowFrame")
+          checked: store.get('hideWindowFrame')
+            ? store.get('hideWindowFrame')
             : false
         },
         {
-          label: "Remember Window Details",
-          type: "checkbox",
+          label: 'Remember Window Details',
+          type: 'checkbox',
           click(e) {
-            if (store.get("windowDetails")) {
-              store.delete("windowDetails");
+            if (store.get('windowDetails')) {
+              store.delete('windowDetails');
             } else {
-              store.set("windowDetails", {});
+              store.set('windowDetails', {});
             }
           },
-          checked: store.get("windowDetails") ? true : false
+          checked: store.get('windowDetails') ? true : false
         },
         {
-          label: "Picture In Picture (Mac Only) *",
-          type: "checkbox",
+          label: 'Picture In Picture (Mac Only) *',
+          type: 'checkbox',
           click(e) {
-            store.set("pictureInPicture", e.checked);
+            store.set('pictureInPicture', e.checked);
             relaunch(store, mainWindow, app);
           },
-          checked: store.get("pictureInPicture")
-            ? store.get("pictureInPicture")
+          checked: store.get('pictureInPicture')
+            ? store.get('pictureInPicture')
             : false,
-          visible: process.platform === "darwin"
+          visible: process.platform === 'darwin'
         },
         {
-          label: "Default Service",
+          label: 'Default Service',
           submenu: [
             {
-              label: "Menu",
-              type: "checkbox",
+              label: 'Menu',
+              type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  e.label == "Menu" ? null : (e.checked = false);
+                  e.label == 'Menu' ? null : (e.checked = false);
                 });
-                store.delete("defaultService");
+                store.delete('defaultService');
               },
-              checked: store.get("defaultService") === undefined
+              checked: store.get('defaultService') === undefined
             },
             {
-              label: "Last Opened Page",
-              type: "checkbox",
+              label: 'Last Opened Page',
+              type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  e.label == "Last Opened Page" ? null : (e.checked = false);
+                  e.label == 'Last Opened Page' ? null : (e.checked = false);
                 });
-                store.set("defaultService", "lastOpenedPage");
+                store.set('defaultService', 'lastOpenedPage');
               },
-              checked: store.get("defaultService") === "lastOpenedPage"
+              checked: store.get('defaultService') === 'lastOpenedPage'
             }
           ].concat(defaultServiceMenuItems)
         },
         {
-          label: "Edit Config",
+          label: 'Edit Config',
           click() {
-            shell.openItem(path.join(app.getPath("userData"), "config.json"));
+            shell.openItem(path.join(app.getPath('userData'), 'config.json'));
           }
         },
         {
-          label: "Reset all settings *",
+          label: 'Reset all settings *',
           click() {
             store.clear();
             relaunch(store, mainWindow, app);
           }
         },
-        { label: "* Means App Will Restart", enabled: false }
+        { label: '* Means App Will Restart', enabled: false }
       ]
     },
     {
-      label: "Edit",
+      label: 'Edit',
       submenu: [
-        { role: "undo" },
-        { role: "redo" },
-        { type: "separator" },
-        { role: "cut" },
-        { role: "copy" },
-        { role: "paste" },
-        { role: "pasteandmatchstyle" },
-        { role: "delete" },
-        { role: "selectall" }
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'pasteandmatchstyle' },
+        { role: 'delete' },
+        { role: 'selectall' }
       ]
     },
     {
-      label: "Developer",
+      label: 'Developer',
       submenu: [
         {
-          label: "Reload",
-          accelerator: "CmdOrCtrl+R",
+          label: 'Reload',
+          accelerator: 'CmdOrCtrl+R',
           click(item, focusedWindow) {
             if (focusedWindow) focusedWindow.reload();
           }
         },
         {
-          label: "Toggle Developer Tools",
+          label: 'Toggle Developer Tools',
           accelerator:
-            process.platform === "darwin" ? "Alt+Command+I" : "Ctrl+Shift+I",
+            process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
           click(item, focusedWindow) {
             focusedWindow.webContents.toggleDevTools();
           }
         },
         {
-          type: "separator"
+          type: 'separator'
         },
         {
-          role: "resetzoom"
+          role: 'resetzoom'
         },
         {
-          role: "zoomin"
+          role: 'zoomin'
         },
         {
-          role: "zoomout"
+          role: 'zoomout'
         },
         {
-          type: "separator"
+          type: 'separator'
         },
         {
-          role: "togglefullscreen"
+          role: 'togglefullscreen'
         }
       ]
     },
     {
-      role: "help",
+      role: 'help',
       submenu: [
         {
-          label: "More Information",
+          label: 'More Information',
           click() {
-            require("electron").shell.openExternal(
-              "http://github.com/oscartbeaumont/ElectronPlayer"
+            require('electron').shell.openExternal(
+              'http://github.com/oscartbeaumont/ElectronPlayer'
             );
           }
         }
@@ -221,7 +221,7 @@ module.exports = (store, mainWindow, app, loaderScript) => {
 };
 
 function relaunch(store, mainWindow, app) {
-  store.set("relaunchToPage", mainWindow.webContents.getURL());
+  store.set('relaunchToPage', mainWindow.webContents.getURL());
   app.relaunch();
   app.exit();
 }

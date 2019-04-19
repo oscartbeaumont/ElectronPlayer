@@ -9,28 +9,28 @@ const e = React.createElement;
 // Create The App Interface
 class App extends React.Component {
   click(url, alt) {
-    console.log(
-      "Switching To Service " + alt + " At The URL " + url
-    );
-    ipc.send("open-url", url);
+    console.log('Switching To Service ' + alt + ' At The URL ' + url);
+    ipc.send('open-url', url);
   }
 
   render() {
     return React.createElement(
-      "div",
+      'div',
       {
-        className: "services"
+        className: 'services'
       },
       services.map((service, index) => {
         return React.createElement(
-          "a",
+          'a',
           {
-            className: "service",
+            className: 'service',
             key: index,
-            onClick: () => { this.click(service.url, service.name) },
-            href: "#"
+            onClick: () => {
+              this.click(service.url, service.name);
+            },
+            href: '#'
           },
-          React.createElement("img", {
+          React.createElement('img', {
             src: service.logo,
             alt: service.name,
             style: {
@@ -39,7 +39,7 @@ class App extends React.Component {
               padding: service.padding
             }
           }),
-          React.createElement("h3", null, service.name)
+          React.createElement('h3', null, service.name)
         );
       })
     );
@@ -49,5 +49,5 @@ class App extends React.Component {
 // Render The Interface To the DOM
 ReactDOM.render(
   React.createElement(App, null, null),
-  document.getElementById("root")
+  document.getElementById('root')
 );

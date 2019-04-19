@@ -4,10 +4,10 @@ and exit from frameless window on linux which were
 the frameless window hides the settings menu.
 */
 
-console.log("ElectronPlayer: Injected Header");
+console.log('ElectronPlayer: Injected Header');
 
 document.body.insertAdjacentHTML(
-  "beforeend",
+  'beforeend',
   `
     <div class="ElectronPlayer-topbar"></div>
     <span class="ElectronPlayer-exit-btn" onclick="ipc.send('exit-fullscreen')">&times;</span>
