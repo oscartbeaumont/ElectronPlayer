@@ -8,18 +8,11 @@ const e = React.createElement;
 
 // Create The App Interface
 class App extends React.Component {
-  click(e) {
-    var target = e.target;
-    if (!target.alt) {
-      console.log(e.target.childNodes);
-      target = e.target.childNodes[0];
-    }
-
-    var targetUrl = target.getAttribute("targeturl");
+  click(url, alt) {
     console.log(
-      "Switching To Service " + target.alt + " At The URL " + targetUrl
+      "Switching To Service " + alt + " At The URL " + url
     );
-    ipc.send("open-url", targetUrl);
+    ipc.send("open-url", url);
   }
 
   render() {
@@ -30,16 +23,16 @@ class App extends React.Component {
       },
       services.map((service, index) => {
         return React.createElement(
-          "div",
+          "a",
           {
             className: "service",
             key: index,
-            onClick: this.click
+            onClick: () => { this.click(service.url, service.name) },
+            href: "#"
           },
           React.createElement("img", {
             src: service.logo,
             alt: service.name,
-            targeturl: service.url,
             style: {
               width: service.width,
               height: service.height,
