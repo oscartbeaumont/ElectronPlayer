@@ -30,6 +30,7 @@ h3 {
 .service {
   flex-grow: 1;
   padding: 30px 0;
+  text-decoration: none;
 }
 
 .service:hover {
