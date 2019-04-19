@@ -32,6 +32,7 @@ snap install electronplayer
 A huge thanks to the following people for helping shape this project.
 
 - [Austin Kregel](https://github.com/austinkregel)
+- [Rasmus Lindroth](https://github.com/RasmusLindroth)
 
 ## Developing
 
@@ -44,8 +45,14 @@ yarn start
 
 ## TODO
 
-- Update Widevine Package So Electron Can Be Updated & Tests Can Be Added
+- Updated Electon Widevine
+- Update All DEPS
+- Add Tests
+- Add Windows Build Support
+- Add Greenkeeper Bot
+
+### Should fix at some point
+
 - Menubar Transparency Glitch On Mac
 - Netflix breaks when relaunching window (eg. Enabling PIP)
-- App Tests
-- Code Signing (Using Self Signed Cert Possibly)
+- Possibly Add Code Signing
