@@ -16,10 +16,10 @@
     "electron-builder": "^20.39.0"
   },
   "dependencies": {
-    "electron-store": "^3.0.0",
+    "electron-store": "^3.2.0",
     "electron-widevinecdm": "^7.0.0",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "build": {
     "appId": "me.otbeaumont.ElectronPlayer",
