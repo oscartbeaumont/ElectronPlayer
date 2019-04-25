@@ -1,5 +1,5 @@
-# ElectronPlayer
-
+ElectronPlayer
+--------------
 [![Build Status](https://travis-ci.org/oscartbeaumont/ElectronPlayer.svg?branch=master)](https://travis-ci.org/oscartbeaumont/ElectronPlayer)
 [![ElectronPlayer](https://snapcraft.io/electronplayer/badge.svg)](https://snapcraft.io/electronplayer)
 
@@ -9,7 +9,7 @@ An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch
 
 The main menu interface.
 
-## Features
+# Features
 
 - Rough Mac Picture in Picture Support (Floating Window, Above All Desktop and Fullscreen Applications)
 - Always On Top Window Option
@@ -17,24 +17,41 @@ The main menu interface.
 - Multiple Streaming Services Support (JSON Config to add extra)
 - Remember Open Service
 
-## Installation
+# Installation
+**Please note Windows is currently only partially supported, as it doesn't support the Widevine package I am using. I am planning to fix this in the future.**
 
-### Please note Windows currently is only partially supported. It doesn't support the Widevine package I am using but I am planning to fix this in the future
+## macOS
+[Click Here](https://github.com/oscartbeaumont/ElectronPlayer/releases) to go to the GitHub Releases and download the installer.
 
-[Click Here](https://github.com/oscartbeaumont/ElectronPlayer/releases) to go to the Github Releases and download the correct installer for your platform. If you are running Linux you can also install this application via a snap.
+## Linux
+There are multiple ways to install ElectronPlayer on Linux.
 
+### Snap
+
+You can install it as a snap:
 ```bash
 snap install electronplayer
 ```
 
-## Contributors
+### AppImage
+
+You can download and use the latest AppImage from the [GitHub Releases](https://github.com/oscartbeaumont/ElectronPlayer/releases).
+
+### Arch Linux AUR
+
+There is an unofficial package on the Arch Linux User Repository provided by [@Scrumplex](https://github.com/Scrumplex).
+
+[electronplayer](https://aur.archlinux.org/packages/electronplayer/)<sup>AUR</sup>
+
+
+# Contributors
 
 A huge thanks to the following people for helping shape this project.
 
 - [Austin Kregel](https://github.com/austinkregel)
 - [Rasmus Lindroth](https://github.com/RasmusLindroth)
 
-## Developing
+# Developing
 
 ```bash
 git clone https://github.com/oscartbeaumont/ElectronPlayer.git
@@ -43,7 +60,7 @@ yarn
 yarn start
 ```
 
-## TODO
+# TODO
 
 - Updated Electon Widevine
 - Update All DEPS
@@ -51,7 +68,7 @@ yarn start
 - Add Windows Build Support
 - Add Greenkeeper Bot
 
-### Should fix at some point
+## Should fix at some point
 
 - Menubar Transparency Glitch On Mac
 - Netflix breaks when relaunching window (eg. Enabling PIP)
