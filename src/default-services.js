@@ -36,6 +36,5 @@
         "transform": "scale(1.7)"
       }
     }
-  ],
-  "alwaysOnTop": true
+  ]
 }
