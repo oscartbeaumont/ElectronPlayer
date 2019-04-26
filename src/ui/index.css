@@ -4,6 +4,8 @@ body {
   -webkit-app-region: drag; /* TODO: This Window Drag Is Not Working */
   margin: 0;
   background-color: rgba(52, 52, 52, 0.95);
+  display: grid;
+  height: 100vh;
 }
 
 body.loading .services {
@@ -13,35 +15,6 @@ body.loading .services {
 
 h3 {
   font-family: 'Source Sans Pro', sans-serif;
-}
-
-#root {
-  display: grid;
-  height: 100vh;
-}
-
-.loader {
-  position: fixed;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); /* easeOutQuint */
-  z-index: 100;
-}
-
-.ripple {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  animation: ripple 0.8s 0.3s cubic-bezier(0.23, 1, 0.32, 1) infinite; /* easeOutQuint */
-  background-color: white;
-  z-index: -1;
-  transform-origin: top left;
-  transform: scale(0) translate(-50%, -50%);
-}
-
-.loader img {
-  margin: auto;
 }
 
 .services {
@@ -66,18 +39,14 @@ h3 {
   padding: 30px 20px;
   border-radius: 10px;
   text-decoration: none;
-}
-
-.services.loading > .service.loading h3 {
-  opacity: 0;
-}
-
-.service:hover {
-  background-color: rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
-.service img, .loader img {
+.services > .service:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.services > .service > img, .loader > img {
   margin: 0 auto;
   display: block;
   height: 110px;
@@ -85,11 +54,31 @@ h3 {
   padding: 5px 0;
 }
 
-.service h3 {
+.services > .service > h3 {
   margin: 0;
   padding-top: 5px;
   text-align: center;
   color: white;
+}
+
+.loader {
+  position: fixed;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); /* easeOutQuint */
+  z-index: 100;
+}
+
+.loader > .ripple {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  animation: ripple 0.8s 0.3s cubic-bezier(0.23, 1, 0.32, 1) infinite; /* easeOutQuint */
+  background-color: white;
+  z-index: -1;
+  transform-origin: top left;
+  transform: scale(0) translate(-50%, -50%);
 }
 
 @keyframes ripple {
