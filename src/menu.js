@@ -1,7 +1,7 @@
 const {Menu, shell} = require('electron');
 const path = require('path');
 
-module.exports = (store, mainWindow, app, loaderScript) => {
+module.exports = (store, mainWindow, app) => {
   var servicesMenuItems = [];
   var defaultServiceMenuItems = [];
   var services = store.get('services');
@@ -12,9 +12,8 @@ module.exports = (store, mainWindow, app, loaderScript) => {
       label: service.name,
       click() {
         console.log('Changing URL To: ' + service.url);
-        mainWindow.webContents.executeJavaScript(loaderScript, () => {
-          mainWindow.webContents.loadURL(service.url);
-        });
+        mainWindow.webContents.loadURL(service.url);
+        mainWindow.webContents.send("run-loader", service);
       }
     });
     defaultServiceMenuItems.push({
@@ -22,13 +21,13 @@ module.exports = (store, mainWindow, app, loaderScript) => {
       type: 'checkbox',
       click(e) {
         e.menu.items.forEach(e => {
-          e.label == service.name ? null : (e.checked = false);
+          if (e.label === service.name)
+            e.checked = false;
         });
         store.set('defaultService', service);
       },
-      checked: store.get('defaultService')
-        ? store.get('defaultService').name == service.name
-        : false
+      checked:
+        store.get('defaultService') ? store.get('defaultService').name === service.name : false
     });
   }
 
@@ -55,9 +54,7 @@ module.exports = (store, mainWindow, app, loaderScript) => {
           accelerator: 'CmdOrCtrl+H',
           click() {
             console.log('Change To The Menu');
-            mainWindow.webContents.executeJavaScript(loaderScript, () => {
-              mainWindow.loadFile('src/ui/index.html');
-            });
+            mainWindow.loadFile('src/ui/index.html');
           }
         }
       ].concat(servicesMenuItems)
@@ -95,7 +92,7 @@ module.exports = (store, mainWindow, app, loaderScript) => {
               store.set('windowDetails', {});
             }
           },
-          checked: store.get('windowDetails') ? true : false
+          checked: !!store.get('windowDetails')
         },
         {
           label: 'Picture In Picture (Mac Only) *',
@@ -117,7 +114,8 @@ module.exports = (store, mainWindow, app, loaderScript) => {
               type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  e.label == 'Menu' ? null : (e.checked = false);
+                  if (e.label === 'Menu')
+                    e.checked = false;
                 });
                 store.delete('defaultService');
               },
@@ -128,7 +126,8 @@ module.exports = (store, mainWindow, app, loaderScript) => {
               type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  e.label == 'Last Opened Page' ? null : (e.checked = false);
+                  if (e.label === 'Last Opened Page')
+                    e.checked = false;
                 });
                 store.set('defaultService', 'lastOpenedPage');
               },

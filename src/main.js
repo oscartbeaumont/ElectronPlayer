@@ -5,11 +5,6 @@ const fs = require('fs'),
   widevine = require('electron-widevinecdm'),
   Store = require('electron-store');
 
-// Static Varibles
-const loaderScript = fs.readFileSync(
-  path.join(__dirname, 'client-loader.js'),
-  'utf8'
-);
 const headerScript = fs.readFileSync(
   path.join(__dirname, 'client-header.js'),
   'utf8'
@@ -74,7 +69,7 @@ function createWindow() {
   global.services = store.get('services');
 
   // Create The Menubar
-  Menu.setApplicationMenu(menu(store, mainWindow, app, loaderScript));
+  Menu.setApplicationMenu(menu(store, mainWindow, app));
 
   // Load the UI or the Default Service
   let defaultService = store.get('defaultService'),
@@ -128,11 +123,9 @@ function createWindow() {
 app.on('ready', () => setTimeout(createWindow, 500));
 
 // Chnage the windows url when told to by the ui
-ipcMain.on('open-url', (e, url) => {
-  console.log('Changing URL To: ' + url);
-  mainWindow.webContents.executeJavaScript(loaderScript, () => {
-    mainWindow.webContents.loadURL(url);
-  });
+ipcMain.on('open-url', (e, service) => {
+  console.log('Changing URL To: ' + service.url);
+  mainWindow.webContents.loadURL(service.url);
 });
 
 // Disable fullscreen when button pressed
