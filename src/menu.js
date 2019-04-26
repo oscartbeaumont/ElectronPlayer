@@ -1,4 +1,4 @@
-const { Menu, shell } = require('electron');
+const {Menu, shell} = require('electron');
 const path = require('path');
 
 module.exports = (store, mainWindow, app, loaderScript) => {
@@ -36,8 +36,8 @@ module.exports = (store, mainWindow, app, loaderScript) => {
     {
       label: 'ElectronPlayer',
       submenu: [
-        { label: 'ElectronPlayer (' + app.getVersion() + ')', enabled: false },
-        { label: 'Created By Oscar Beaumont', enabled: false },
+        {label: 'ElectronPlayer (' + app.getVersion() + ')', enabled: false},
+        {label: 'Created By Oscar Beaumont', enabled: false},
         {
           label: 'Quit ElectronPlayer',
           accelerator: 'Command+Q', // TODO: Non Mac Shortcut
@@ -149,21 +149,21 @@ module.exports = (store, mainWindow, app, loaderScript) => {
             relaunch(store, mainWindow, app);
           }
         },
-        { label: '* Means App Will Restart', enabled: false }
+        {label: '* Means App Will Restart', enabled: false}
       ]
     },
     {
       label: 'Edit',
       submenu: [
-        { role: 'undo' },
-        { role: 'redo' },
-        { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
-        { role: 'pasteandmatchstyle' },
-        { role: 'delete' },
-        { role: 'selectall' }
+        {role: 'undo'},
+        {role: 'redo'},
+        {type: 'separator'},
+        {role: 'cut'},
+        {role: 'copy'},
+        {role: 'paste'},
+        {role: 'pasteandmatchstyle'},
+        {role: 'delete'},
+        {role: 'selectall'}
       ]
     },
     {

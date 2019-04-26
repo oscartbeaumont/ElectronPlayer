@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const {app, BrowserWindow, Menu, ipcMain} = require('electron');
 const fs = require('fs'),
   path = require('path'),
   widevine = require('electron-widevinecdm'),
