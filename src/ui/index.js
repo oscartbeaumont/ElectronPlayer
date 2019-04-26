@@ -20,6 +20,31 @@ function createElement(tag, initialClass = null, style = null) {
   return elem;
 }
 
+function animateLoader(service, img) {
+
+  let loader = createElement("div", "loader", {
+    top: `${img.getBoundingClientRect().top}px`,
+    left: `${img.getBoundingClientRect().left}px`
+  });
+
+  let ripple = createElement("div", "ripple", {
+    backgroundColor: service.color
+  });
+
+  loader.appendChild(ripple);
+  loader.appendChild(img.cloneNode());
+
+  document.body.appendChild(loader);
+
+  servicesElem.classList.add("loading");
+
+  setTimeout(() => {
+    loader.style.top = "50%";
+    loader.style.left = "50%";
+    loader.style.transform = "translate(-50%, -50%)";
+  }, 1);
+}
+
 services.forEach(function (service) {
   // create service element
   let elem = createElement("a", "service");
@@ -48,27 +73,7 @@ services.forEach(function (service) {
     if (isLoading())
       return;
 
-    let loader = createElement("div", "loader", {
-      top: `${img.getBoundingClientRect().top}px`,
-      left: `${img.getBoundingClientRect().left}px`
-    });
-
-    let ripple = createElement("div", "ripple", {
-      backgroundColor: service.color
-    });
-
-    loader.appendChild(ripple);
-    loader.appendChild(img.cloneNode());
-
-    document.body.appendChild(loader);
-
-    servicesElem.classList.add("loading");
-
-    requestAnimationFrame(() => {
-      loader.style.top = "50%";
-      loader.style.left = "50%";
-      loader.style.transform = "translate(-50%, -50%)";
-    });
+    animateLoader(service, img);
 
     console.log(`Switching to service ${service.name}} at the URL ${service.url}`);
     ipc.send('open-url', service);
@@ -81,22 +86,7 @@ ipc.on("run-loader", (e, service) => {
 
   let img = document.getElementById(service.name);
 
-  let loader = createElement("div", "loader", {
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)"
-  });
-
-  let ripple = createElement("div", "ripple", {
-    backgroundColor: service.color
-  });
-
-  loader.appendChild(ripple);
-  loader.appendChild(img.cloneNode());
-
-  document.body.appendChild(loader);
-
-  servicesElem.classList.add("loading");
+  animateLoader(service, img);
 
   console.log(`Switching to service ${service.name}} at the URL ${service.url}`);
 });
