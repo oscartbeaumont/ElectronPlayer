@@ -48,10 +48,11 @@ There is an unofficial package on the Arch Linux User Repository provided by [@S
 
 # Contributors
 
-A huge thanks to the following people for helping shape this project.
+A huge thanks to the following people for contributing and helping shape this project.
 
 - [Austin Kregel](https://github.com/austinkregel)
 - [Rasmus Lindroth](https://github.com/RasmusLindroth)
+- [Scrumplex](https://github.com/Scrumplex)
 
 # Developing
 
