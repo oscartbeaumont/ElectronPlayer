@@ -27,7 +27,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  transition: opacity 0.3s cubic-bezier(0.86, 0, 0.07, 1);  /* easeInOutQuint */
+  transition: opacity 0.3s cubic-bezier(0.86, 0, 0.07, 1); /* easeInOutQuint */
 }
 
 .services.loading {
@@ -46,7 +46,8 @@ h3 {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-.services > .service > img, .loader > img {
+.services > .service > img,
+.loader > img {
   margin: 0 auto;
   display: block;
   height: 110px;

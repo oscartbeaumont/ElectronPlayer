@@ -1,4 +1,4 @@
-const {Menu, shell} = require('electron');
+const { Menu, shell } = require('electron');
 const path = require('path');
 
 module.exports = (store, mainWindow, app) => {
@@ -13,7 +13,7 @@ module.exports = (store, mainWindow, app) => {
       click() {
         console.log('Changing URL To: ' + service.url);
         mainWindow.webContents.loadURL(service.url);
-        mainWindow.webContents.send("run-loader", service);
+        mainWindow.webContents.send('run-loader', service);
       }
     });
     defaultServiceMenuItems.push({
@@ -21,13 +21,13 @@ module.exports = (store, mainWindow, app) => {
       type: 'checkbox',
       click(e) {
         e.menu.items.forEach(e => {
-          if (e.label === service.name)
-            e.checked = false;
+          if (e.label === service.name) e.checked = false;
         });
         store.set('defaultService', service);
       },
-      checked:
-        store.get('defaultService') ? store.get('defaultService').name === service.name : false
+      checked: store.get('defaultService')
+        ? store.get('defaultService').name === service.name
+        : false
     });
   }
 
@@ -35,8 +35,8 @@ module.exports = (store, mainWindow, app) => {
     {
       label: 'ElectronPlayer',
       submenu: [
-        {label: 'ElectronPlayer (' + app.getVersion() + ')', enabled: false},
-        {label: 'Created By Oscar Beaumont', enabled: false},
+        { label: 'ElectronPlayer (' + app.getVersion() + ')', enabled: false },
+        { label: 'Created By Oscar Beaumont', enabled: false },
         {
           label: 'Quit ElectronPlayer',
           accelerator: 'Command+Q', // TODO: Non Mac Shortcut
@@ -114,8 +114,7 @@ module.exports = (store, mainWindow, app) => {
               type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  if (e.label === 'Menu')
-                    e.checked = false;
+                  if (e.label === 'Menu') e.checked = false;
                 });
                 store.delete('defaultService');
               },
@@ -126,8 +125,7 @@ module.exports = (store, mainWindow, app) => {
               type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  if (e.label === 'Last Opened Page')
-                    e.checked = false;
+                  if (e.label === 'Last Opened Page') e.checked = false;
                 });
                 store.set('defaultService', 'lastOpenedPage');
               },
@@ -148,21 +146,21 @@ module.exports = (store, mainWindow, app) => {
             relaunch(store, mainWindow, app);
           }
         },
-        {label: '* Means App Will Restart', enabled: false}
+        { label: '* Means App Will Restart', enabled: false }
       ]
     },
     {
       label: 'Edit',
       submenu: [
-        {role: 'undo'},
-        {role: 'redo'},
-        {type: 'separator'},
-        {role: 'cut'},
-        {role: 'copy'},
-        {role: 'paste'},
-        {role: 'pasteandmatchstyle'},
-        {role: 'delete'},
-        {role: 'selectall'}
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'pasteandmatchstyle' },
+        { role: 'delete' },
+        { role: 'selectall' }
       ]
     },
     {

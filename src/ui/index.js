@@ -2,10 +2,10 @@
 This script renders the main menu ui.
 */
 
-let servicesElem = document.querySelector(".services");
+let servicesElem = document.querySelector('.services');
 
 function isLoading() {
-  return document.body.classList.contains("loading");
+  return document.body.classList.contains('loading');
 }
 
 function createElement(tag, initialClass = null, style = null) {
@@ -13,22 +13,22 @@ function createElement(tag, initialClass = null, style = null) {
   if (initialClass && initialClass.trim().length > 0)
     elem.classList.add(initialClass);
   if (style) {
-    Object.keys(style).forEach(function (key) {
+    Object.keys(style).forEach(key => {
       elem.style[key] = style[key];
-    })
+    });
   }
   return elem;
 }
 
 function animateLoader(service, img) {
   // create loader element
-  let loader = createElement("div", "loader", {
+  let loader = createElement('div', 'loader', {
     top: `${img.getBoundingClientRect().top}px`,
     left: `${img.getBoundingClientRect().left}px`
   });
 
   // create ripple element
-  let ripple = createElement("div", "ripple", {
+  let ripple = createElement('div', 'ripple', {
     backgroundColor: service.color
   });
 
@@ -39,32 +39,32 @@ function animateLoader(service, img) {
   document.body.appendChild(loader);
 
   // set global state to loading
-  document.body.classList.add("loading");
+  document.body.classList.add('loading');
 
   setTimeout(() => {
     // let the element transition to the center of the screen
-    loader.style.top = "50%";
-    loader.style.left = "50%";
-    loader.style.transform = "translate(-50%, -50%)";
+    loader.style.top = '50%';
+    loader.style.left = '50%';
+    loader.style.transform = 'translate(-50%, -50%)';
   }, 1);
 }
 
-services.forEach(function (service) {
+services.forEach(service => {
   // create service element
-  let elem = createElement("a", "service");
-  elem.setAttribute("href", "#");
+  let elem = createElement('a', 'service');
+  elem.setAttribute('href', '#');
 
   // create img element
-  let img = createElement("img", null, service.style);
-  img.setAttribute("id", service.name);
-  img.setAttribute("src", service.logo);
-  img.setAttribute("alt", service.name);
+  let img = createElement('img', null, service.style);
+  img.setAttribute('id', service.name);
+  img.setAttribute('src', service.logo);
+  img.setAttribute('alt', service.name);
 
   // append img to service element
   elem.appendChild(img);
 
   // create h3 element
-  let h3 = document.createElement("h3");
+  let h3 = document.createElement('h3');
   h3.appendChild(document.createTextNode(service.name));
 
   // append h3 element to service element
@@ -73,24 +73,26 @@ services.forEach(function (service) {
   // append service element to services
   servicesElem.appendChild(elem);
 
-  elem.addEventListener("click", () => {
-    if (isLoading())
-      return;
+  elem.addEventListener('click', () => {
+    if (isLoading()) return;
 
     animateLoader(service, img);
-    console.log(`Switching to service ${service.name}} at the URL ${service.url}...`);
+    console.log(
+      `Switching to service ${service.name}} at the URL ${service.url}...`
+    );
     ipc.send('open-url', service);
   });
 });
 
 // if requested by menu
-ipc.on("run-loader", (e, service) => {
-  if (isLoading())
-    return;
+ipc.on('run-loader', (e, service) => {
+  if (isLoading()) return;
 
   // find image of the selected service in DOM
   let img = document.getElementById(service.name);
 
   animateLoader(service, img);
-  console.log(`Switching to service ${service.name}} at the URL ${service.url}...`);
+  console.log(
+    `Switching to service ${service.name}} at the URL ${service.url}...`
+  );
 });
