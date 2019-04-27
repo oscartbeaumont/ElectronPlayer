@@ -76,9 +76,9 @@ function createWindow() {
       defaultId: 0,
       title: 'Reset your ElectronPlayer configuration?',
       message:
-        'Reset your ElectronPlayer config due to a breaking change in the latest update?',
+        'Do you want to reset your ElectronPlayer config due to a breaking change in the latest update?',
       detail:
-        'If you changed your config or options these will be lost. Defering WILL cause CRASHING and BUGS but can be used to backup your config before resetting it using the options menu.',
+        'If you customized your config or options, these will be lost. Defering WILL cause CRASHING and BUGS but can be used to backup your config before resetting it using the options menu.',
       checkboxChecked: true
     };
 
@@ -92,7 +92,7 @@ function createWindow() {
       return;
     } else {
       console.log(
-        'All Hell is breaking loose!!!! You should backup your config and reset it as fast as possible!!!!'
+        'All Hell is breaking loose! You should backup your config and reset it as fast as possible!'
       );
     }
   }
