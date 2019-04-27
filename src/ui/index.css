@@ -64,7 +64,7 @@ h3 {
 
 .loader {
   position: fixed;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); /* easeOutQuint */
+  transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1); /* easeOutQuint */
   z-index: 100;
 }
 
@@ -75,8 +75,8 @@ h3 {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  animation: ripple 0.8s 0.3s cubic-bezier(0.23, 1, 0.32, 1) infinite; /* easeOutQuint */
-  background-color: white;
+  animation: ripple 0.8s 0.2s cubic-bezier(0.23, 1, 0.32, 1) infinite; /* easeOutQuint */
+  background-color: white; /* will be replaced later by JS */
   z-index: -1;
   transform-origin: top left;
   transform: scale(0) translate(-50%, -50%);

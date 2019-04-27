@@ -49,6 +49,7 @@ function animateLoader(service, img) {
   }, 1);
 }
 
+// initialize services
 services.forEach(service => {
   // create service element
   let elem = createElement('a', 'service');
