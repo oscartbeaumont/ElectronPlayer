@@ -69,7 +69,18 @@ function createWindow() {
   }
 
   // This provides a method for updating the configuration over time
-  if (store.get('version') != app.getVersion()) {
+  if (store.get('version') === app.getVersion()) {
+    // Update Not Required For Client
+  } else if (
+    store.get('version') === '2.0.4' &&
+    store.get('services').length === 4
+  ) {
+    // Automatic Config Update
+    store.set('services', require('./default-services'));
+    store.set('version', app.getVersion());
+    console.log('Automatically updated default services in your config');
+  } else {
+    // Manual Config Update
     let options = {
       type: 'question',
       buttons: ['Yes', 'Defer'],
