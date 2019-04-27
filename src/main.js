@@ -1,15 +1,10 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
 const fs = require('fs'),
   path = require('path'),
   widevine = require('electron-widevinecdm'),
   Store = require('electron-store');
 
-// Static Varibles
-const loaderScript = fs.readFileSync(
-  path.join(__dirname, 'client-loader.js'),
-  'utf8'
-);
 const headerScript = fs.readFileSync(
   path.join(__dirname, 'client-header.js'),
   'utf8'
@@ -39,16 +34,16 @@ function createWindow() {
     // Window Styling
     transparent: true,
     vibrancy: 'ultra-dark',
-    frame: store.get('pictureInPicture')
+    frame: store.get('options.pictureInPicture')
       ? false
-      : !store.get('hideWindowFrame'),
-    alwaysOnTop: store.get('alwaysOnTop'),
+      : !store.get('options.hideWindowFrame'),
+    alwaysOnTop: store.get('options.alwaysOnTop'),
     toolbar: false,
     backgroundColor: '#00000000'
   });
 
   // Reset The Windows Size and Location
-  let windowDetails = store.get('windowDetails');
+  let windowDetails = store.get('options.windowDetails');
   if (windowDetails) {
     let size = windowDetails.size;
     let position = windowDetails.position;
@@ -58,7 +53,7 @@ function createWindow() {
   }
 
   // Configire Picture In Picture
-  if (store.get('pictureInPicture') && process.platform === 'darwin') {
+  if (store.get('options.pictureInPicture') && process.platform === 'darwin') {
     app.dock.hide();
     mainWindow.setAlwaysOnTop(true, 'floating');
     mainWindow.setVisibleOnAllWorkspaces(true);
@@ -68,23 +63,53 @@ function createWindow() {
 
   // Load The Services From The Configuration (And Set The Default If Not Already Set)
   if (!store.get('services')) {
+    store.set('version', app.getVersion());
     store.set('services', require('./default-services'));
     console.log('Initialised Services In The Config!');
+  }
+
+  // This provides a method for updating the configuration over time
+  if (store.get('version') != app.getVersion()) {
+    let options = {
+      type: 'question',
+      buttons: ['Yes', 'Defer'],
+      defaultId: 0,
+      title: 'Reset your ElectronPlayer configuration?',
+      message:
+        'Reset your ElectronPlayer config due to a breaking change in the latest update?',
+      detail:
+        'If you changed your config or options these will be lost. Defering WILL cause CRASHING and BUGS but can be used to backup your config before resetting it using the options menu.',
+      checkboxChecked: true
+    };
+
+    const response = dialog.showMessageBox(null, options);
+
+    if (response == 0) {
+      store.clear();
+      app.relaunch();
+      app.exit();
+      console.log('Reset Configuration and Restarting Electron');
+      return;
+    } else {
+      console.log(
+        'All Hell is breaking loose!!!! You should backup your config and reset it as fast as possible!!!!'
+      );
+    }
   }
   global.services = store.get('services');
 
   // Create The Menubar
-  Menu.setApplicationMenu(menu(store, mainWindow, app, loaderScript));
+  Menu.setApplicationMenu(menu(store, mainWindow, app));
 
   // Load the UI or the Default Service
-  let defaultService = store.get('defaultService'),
-    lastOpenedPage = store.get('lastOpenedPage'),
-    relaunchToPage = store.get('relaunchToPage');
+  let defaultService = store.get('options.defaultService'),
+    lastOpenedPage = store.get('options.lastOpenedPage'),
+    relaunchToPage = store.get('options.relaunchToPage');
 
-  if (relaunchToPage != undefined) {
+  if (relaunchToPage !== undefined) {
     console.log('Relaunching Page ' + relaunchToPage);
     mainWindow.loadURL(relaunchToPage);
-    store.delete('relaunchToPage');
+    store.delete('options.relaunchToPage');
   } else if (defaultService == 'lastOpenedPage' && lastOpenedPage) {
     console.log('Loading The Last Opened Page ' + lastOpenedPage);
     mainWindow.loadURL(lastOpenedPage);
@@ -98,11 +123,11 @@ function createWindow() {
 
   // Emitted when the window is closing
   mainWindow.on('close', e => {
-    if (store.get('defaultService') == 'lastOpenedPage') {
-      store.set('lastOpenedPage', mainWindow.webContents.getURL());
+    if (store.get('options.defaultService') == 'lastOpenedPage') {
+      store.set('options.lastOpenedPage', mainWindow.webContents.getURL());
     }
-    if (store.get('windowDetails')) {
-      store.set('windowDetails', {
+    if (store.get('options.windowDetails')) {
+      store.set('options.windowDetails', {
         position: mainWindow.getPosition(),
         size: mainWindow.getSize()
       });
@@ -111,7 +136,10 @@ function createWindow() {
 
   // Inject Header Script On Page Load If In Frameless Window
   mainWindow.webContents.on('dom-ready', () => {
-    if (store.get('pictureInPicture') || store.get('hideWindowFrame')) {
+    if (
+      store.get('options.pictureInPicture') ||
+      store.get('options.hideWindowFrame')
+    ) {
       mainWindow.webContents.executeJavaScript(headerScript);
     }
   });
@@ -128,23 +156,21 @@ function createWindow() {
 app.on('ready', () => setTimeout(createWindow, 500));
 
 // Chnage the windows url when told to by the ui
-ipcMain.on('open-url', (e, url) => {
-  console.log('Changing URL To: ' + url);
-  mainWindow.webContents.executeJavaScript(loaderScript, () => {
-    mainWindow.webContents.loadURL(url);
-  });
+ipcMain.on('open-url', (e, service) => {
+  console.log('Changing URL To: ' + service.url);
+  mainWindow.webContents.loadURL(service.url);
 });
 
 // Disable fullscreen when button pressed
 ipcMain.on('exit-fullscreen', e => {
-  if (store.get('pictureInPicture')) {
-    store.delete('pictureInPicture');
-  } else if (store.get('hideWindowFrame')) {
-    store.delete('hideWindowFrame');
+  if (store.get('options.pictureInPicture')) {
+    store.delete('options.pictureInPicture');
+  } else if (store.get('options.hideWindowFrame')) {
+    store.delete('options.hideWindowFrame');
   }
 
   // Relaunch
-  store.set('relaunchToPage', mainWindow.webContents.getURL());
+  store.set('options.relaunchToPage', mainWindow.webContents.getURL());
   app.relaunch();
   app.exit();
 });

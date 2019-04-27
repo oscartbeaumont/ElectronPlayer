@@ -3,27 +3,36 @@ module.exports = [
     name: 'Netflix',
     logo: 'services/netflix.png',
     url: 'https://netflix.com/browse',
-    width: '75px',
-    height: '125px',
-    padding: '0'
+    color: '#e50914',
+    style: {
+      transform: 'scale(1.1)'
+    }
   },
   {
     name: 'YouTube',
-    logo: 'services/youtube.png',
+    logo: 'services/youtube.svg',
     url: 'https://youtube.com',
-    width: '120px',
-    height: '95px',
-    padding: '15px 0'
+    color: '#ff0000',
+    style: {
+      transform: 'scale(1.9)'
+    }
   },
   {
     name: 'Twitch',
-    logo: 'services/twitch.png',
+    logo: 'services/twitch.svg',
     url: 'https://twitch.tv',
-    width: '100px'
+    color: '#6441a5',
+    style: {
+      transform: 'scale(1.6)'
+    }
   },
   {
     name: 'Floatplane',
-    logo: 'services/floatplane.png',
-    url: 'https://floatplane.com/'
+    logo: 'services/floatplane.svg',
+    url: 'https://floatplane.com/',
+    color: '#00aeef',
+    style: {
+      transform: 'scale(1.7)'
+    }
   }
 ];

@@ -17,9 +17,7 @@
   },
   "dependencies": {
     "electron-store": "^3.2.0",
-    "electron-widevinecdm": "^7.0.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "electron-widevinecdm": "^7.0.0"
   },
   "build": {
     "appId": "me.otbeaumont.ElectronPlayer",

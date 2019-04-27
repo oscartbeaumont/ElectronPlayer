@@ -1,35 +1,36 @@
 const { Menu, shell } = require('electron');
 const path = require('path');
 
-module.exports = (store, mainWindow, app, loaderScript) => {
+module.exports = (store, mainWindow, app) => {
   var servicesMenuItems = [];
   var defaultServiceMenuItems = [];
   var services = store.get('services');
 
-  for (var i = 0; i < services.length; i++) {
-    let service = services[i];
-    servicesMenuItems.push({
-      label: service.name,
-      click() {
-        console.log('Changing URL To: ' + service.url);
-        mainWindow.webContents.executeJavaScript(loaderScript, () => {
+  if (services !== undefined) {
+    for (var i = 0; i < services.length; i++) {
+      let service = services[i];
+      servicesMenuItems.push({
+        label: service.name,
+        click() {
+          console.log('Changing URL To: ' + service.url);
           mainWindow.webContents.loadURL(service.url);
-        });
-      }
-    });
-    defaultServiceMenuItems.push({
-      label: service.name,
-      type: 'checkbox',
-      click(e) {
-        e.menu.items.forEach(e => {
-          e.label == service.name ? null : (e.checked = false);
-        });
-        store.set('defaultService', service);
-      },
-      checked: store.get('defaultService')
-        ? store.get('defaultService').name == service.name
-        : false
-    });
+          mainWindow.webContents.send('run-loader', service);
+        }
+      });
+      defaultServiceMenuItems.push({
+        label: service.name,
+        type: 'checkbox',
+        click(e) {
+          e.menu.items.forEach(e => {
+            if (e.label === service.name) e.checked = false;
+          });
+          store.set('options.defaultService', service);
+        },
+        checked: store.get('options.defaultService')
+          ? store.get('options.defaultService').name === service.name
+          : false
+      });
+    }
   }
 
   return Menu.buildFromTemplate([
@@ -55,9 +56,7 @@ module.exports = (store, mainWindow, app, loaderScript) => {
           accelerator: 'CmdOrCtrl+H',
           click() {
             console.log('Change To The Menu');
-            mainWindow.webContents.executeJavaScript(loaderScript, () => {
-              mainWindow.loadFile('src/ui/index.html');
-            });
+            mainWindow.loadFile('src/ui/index.html');
           }
         }
       ].concat(servicesMenuItems)
@@ -69,43 +68,43 @@ module.exports = (store, mainWindow, app, loaderScript) => {
           label: 'Always On Top',
           type: 'checkbox',
           click(e) {
-            store.set('alwaysOnTop', e.checked);
+            store.set('options.alwaysOnTop', e.checked);
             mainWindow.setAlwaysOnTop(e.checked);
           },
-          checked: store.get('alwaysOnTop')
+          checked: store.get('options.alwaysOnTop')
         },
         {
           label: 'Frameless Window *',
           type: 'checkbox',
           click(e) {
-            store.set('hideWindowFrame', e.checked);
+            store.set('options.hideWindowFrame', e.checked);
             relaunch(store, mainWindow, app);
           },
-          checked: store.get('hideWindowFrame')
-            ? store.get('hideWindowFrame')
+          checked: store.get('options.hideWindowFrame')
+            ? store.get('options.hideWindowFrame')
             : false
         },
         {
           label: 'Remember Window Details',
           type: 'checkbox',
           click(e) {
-            if (store.get('windowDetails')) {
-              store.delete('windowDetails');
+            if (store.get('options.windowDetails')) {
+              store.delete('options.windowDetails');
             } else {
-              store.set('windowDetails', {});
+              store.set('options.windowDetails', {});
             }
           },
-          checked: store.get('windowDetails') ? true : false
+          checked: !!store.get('options.windowDetails')
         },
         {
           label: 'Picture In Picture (Mac Only) *',
           type: 'checkbox',
           click(e) {
-            store.set('pictureInPicture', e.checked);
+            store.set('options.pictureInPicture', e.checked);
             relaunch(store, mainWindow, app);
           },
-          checked: store.get('pictureInPicture')
-            ? store.get('pictureInPicture')
+          checked: store.get('options.pictureInPicture')
+            ? store.get('options.pictureInPicture')
             : false,
           visible: process.platform === 'darwin'
         },
@@ -117,22 +116,22 @@ module.exports = (store, mainWindow, app, loaderScript) => {
               type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  e.label == 'Menu' ? null : (e.checked = false);
+                  if (e.label === 'Menu') e.checked = false;
                 });
-                store.delete('defaultService');
+                store.delete('options.defaultService');
               },
-              checked: store.get('defaultService') === undefined
+              checked: store.get('options.defaultService') === undefined
             },
             {
               label: 'Last Opened Page',
               type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  e.label == 'Last Opened Page' ? null : (e.checked = false);
+                  if (e.label === 'Last Opened Page') e.checked = false;
                 });
-                store.set('defaultService', 'lastOpenedPage');
+                store.set('options.defaultService', 'lastOpenedPage');
               },
-              checked: store.get('defaultService') === 'lastOpenedPage'
+              checked: store.get('options.defaultService') === 'lastOpenedPage'
             }
           ].concat(defaultServiceMenuItems)
         },
@@ -221,7 +220,7 @@ module.exports = (store, mainWindow, app, loaderScript) => {
 };
 
 function relaunch(store, mainWindow, app) {
-  store.set('relaunchToPage', mainWindow.webContents.getURL());
+  store.set('options.relaunchToPage', mainWindow.webContents.getURL());
   app.relaunch();
   app.exit();
 }

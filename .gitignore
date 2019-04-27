@@ -2,3 +2,10 @@
 dist/
 node_modules/
 thumbs.db
+
+# IntelliJ platform
+.idea/
+*.iml
+
+# Dolphin file manager
+.directory
