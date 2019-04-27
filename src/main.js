@@ -69,16 +69,27 @@ function createWindow() {
   }
 
   // This provides a method for updating the configuration over time
-  if (store.get('version') != app.getVersion()) {
+  if (store.get('version') === app.getVersion()) {
+    // Update Not Required For Client
+  } else if (
+    store.get('version') === '2.0.4' &&
+    store.get('services').length === 4
+  ) {
+    // Automatic Config Update
+    store.set('services', require('./default-services'));
+    store.set('version', app.getVersion());
+    console.log('Automatically updated default services in your config');
+  } else {
+    // Manual Config Update
     let options = {
       type: 'question',
       buttons: ['Yes', 'Defer'],
       defaultId: 0,
       title: 'Reset your ElectronPlayer configuration?',
       message:
-        'Reset your ElectronPlayer config due to a breaking change in the latest update?',
+        'Do you want to reset your ElectronPlayer config due to a breaking change in the latest update?',
       detail:
-        'If you changed your config or options these will be lost. Defering WILL cause CRASHING and BUGS but can be used to backup your config before resetting it using the options menu.',
+        'If you customized your config or options, these will be lost. Defering WILL cause CRASHING and BUGS but can be used to backup your config before resetting it using the options menu.',
       checkboxChecked: true
     };
 
@@ -92,7 +103,7 @@ function createWindow() {
       return;
     } else {
       console.log(
-        'All Hell is breaking loose!!!! You should backup your config and reset it as fast as possible!!!!'
+        'All Hell is breaking loose! You should backup your config and reset it as fast as possible!'
       );
     }
   }
