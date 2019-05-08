@@ -21,6 +21,9 @@ document.body.insertAdjacentHTML(
           opacity: 0;
           background: black;
           z-index: 99999;
+          cursor: -webkit-grab;
+          cursor: grab;
+          -webkit-user-drag: none;
           -webkit-app-region: drag;
         }
 
@@ -37,6 +40,10 @@ document.body.insertAdjacentHTML(
           font-weight: 600;
           padding-left: 5px;
           z-index: 99999;
+          cursor: -webkit-grab;
+          cursor: grab;
+          -webkit-user-drag: none;
+          -webkit-app-region: no-drag;
         }
 
         .ElectronPlayer-exit-btn:hover {
