@@ -27,6 +27,9 @@
     "win": {
       "target": "msi"
     },
+    "snap": {
+     "plugs": ["default", "screen-inhibit-control"]
+    },
     "linux": {
       "category": "Video",
       "target": [
