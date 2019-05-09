@@ -44,12 +44,23 @@ function createWindow() {
 
   // Reset The Windows Size and Location
   let windowDetails = store.get('options.windowDetails');
-  if (windowDetails) {
-    let size = windowDetails.size;
-    let position = windowDetails.position;
-
-    mainWindow.setSize(size[0], size[1]);
-    mainWindow.setPosition(position[0], position[1]);
+  let relaunchWindowDetails = store.get('relaunch.windowDetails');
+  if (relaunchWindowDetails) {
+    mainWindow.setSize(
+      relaunchWindowDetails.size[0],
+      relaunchWindowDetails.size[1]
+    );
+    mainWindow.setPosition(
+      relaunchWindowDetails.position[0],
+      relaunchWindowDetails.position[1]
+    );
+    store.delete('relaunch.windowDetails');
+  } else if (windowDetails) {
+    mainWindow.setSize(windowDetails.size[0], windowDetails.size[1]);
+    mainWindow.setPosition(
+      windowDetails.position[0],
+      windowDetails.position[1]
+    );
   }
 
   // Configire Picture In Picture
@@ -72,7 +83,7 @@ function createWindow() {
   if (store.get('version') === app.getVersion()) {
     // Update Not Required For Client
   } else if (
-    store.get('version') === '2.0.4' &&
+    store.get('version') === '2.0.4' && // TODO: Allow this to be automatic and work again for future releases
     store.get('services').length === 4
   ) {
     // Automatic Config Update
@@ -97,7 +108,7 @@ function createWindow() {
 
     if (response == 0) {
       store.clear();
-      app.relaunch();
+      app.emit('relaunch');
       app.exit();
       console.log('Reset Configuration and Restarting Electron');
       return;
@@ -115,12 +126,12 @@ function createWindow() {
   // Load the UI or the Default Service
   let defaultService = store.get('options.defaultService'),
     lastOpenedPage = store.get('options.lastOpenedPage'),
-    relaunchToPage = store.get('options.relaunchToPage');
+    relaunchToPage = store.get('relaunch.toPage');
 
   if (relaunchToPage !== undefined) {
     console.log('Relaunching Page ' + relaunchToPage);
     mainWindow.loadURL(relaunchToPage);
-    store.delete('options.relaunchToPage');
+    store.delete('relaunch.toPage');
   } else if (defaultService == 'lastOpenedPage' && lastOpenedPage) {
     console.log('Loading The Last Opened Page ' + lastOpenedPage);
     mainWindow.loadURL(lastOpenedPage);
@@ -146,14 +157,7 @@ function createWindow() {
   });
 
   // Inject Header Script On Page Load If In Frameless Window
-  mainWindow.webContents.on('dom-ready', () => {
-    if (
-      store.get('options.pictureInPicture') ||
-      store.get('options.hideWindowFrame')
-    ) {
-      mainWindow.webContents.executeJavaScript(headerScript);
-    }
-  });
+  mainWindow.webContents.on('dom-ready', broswerWindowDomReady);
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -161,10 +165,45 @@ function createWindow() {
   });
 }
 
+// This method is called when the broswer window's dom is ready
+// it is used to inject the header if pictureInPicture mode and
+// hideWindowFrame are enabled.
+function broswerWindowDomReady() {
+  if (
+    store.get('options.pictureInPicture') ||
+    store.get('options.hideWindowFrame')
+  ) {
+    mainWindow.webContents.executeJavaScript(headerScript);
+  }
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // The timeout fixes the trasparent background on Linux ???? why
 app.on('ready', () => setTimeout(createWindow, 500));
+
+// This is a custom event that is used to relaunch the application.
+// It destroys and recreates the broswer window. This is used to apply
+// settings that Electron doesn't allow to be changed on an active
+// broswer window.
+app.on('relaunch', () => {
+  console.log('Relaunching The Application!');
+
+  // Store details to remeber when relaunched
+  store.set('relaunch.toPage', mainWindow.webContents.getURL());
+  store.set('relaunch.windowDetails', {
+    position: mainWindow.getPosition(),
+    size: mainWindow.getSize()
+  });
+
+  // Destory The BroswerWindow
+  mainWindow.webContents.removeListener('dom-ready', broswerWindowDomReady);
+  mainWindow.close();
+  mainWindow = undefined;
+
+  // Create a New BroswerWindow
+  createWindow();
+});
 
 // Chnage the windows url when told to by the ui
 ipcMain.on('open-url', (e, service) => {
@@ -181,9 +220,7 @@ ipcMain.on('exit-fullscreen', e => {
   }
 
   // Relaunch
-  store.set('options.relaunchToPage', mainWindow.webContents.getURL());
-  app.relaunch();
-  app.exit();
+  app.emit('relaunch');
 });
 
 // Quit when all windows are closed.

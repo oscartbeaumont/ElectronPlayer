@@ -78,7 +78,7 @@ module.exports = (store, mainWindow, app) => {
           type: 'checkbox',
           click(e) {
             store.set('options.hideWindowFrame', e.checked);
-            relaunch(store, mainWindow, app);
+            app.emit('relaunch');
           },
           checked: store.get('options.hideWindowFrame')
             ? store.get('options.hideWindowFrame')
@@ -101,7 +101,7 @@ module.exports = (store, mainWindow, app) => {
           type: 'checkbox',
           click(e) {
             store.set('options.pictureInPicture', e.checked);
-            relaunch(store, mainWindow, app);
+            app.emit('relaunch');
           },
           checked: store.get('options.pictureInPicture')
             ? store.get('options.pictureInPicture')
@@ -145,7 +145,7 @@ module.exports = (store, mainWindow, app) => {
           label: 'Reset all settings *',
           click() {
             store.clear();
-            relaunch(store, mainWindow, app);
+            app.emit('relaunch');
           }
         },
         { label: '* Means App Will Restart', enabled: false }
@@ -218,9 +218,3 @@ module.exports = (store, mainWindow, app) => {
     }
   ]);
 };
-
-function relaunch(store, mainWindow, app) {
-  store.set('options.relaunchToPage', mainWindow.webContents.getURL());
-  app.relaunch();
-  app.exit();
-}
