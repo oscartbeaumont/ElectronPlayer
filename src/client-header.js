@@ -49,6 +49,10 @@ document.body.insertAdjacentHTML(
         .ElectronPlayer-exit-btn:hover {
           color: white;
         }
+
+        ::-webkit-scrollbar {
+          display: none;
+        }
     </style>
 `
 );
