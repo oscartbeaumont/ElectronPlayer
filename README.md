@@ -1,6 +1,6 @@
 ## ElectronPlayer
 
-### Currently Netflix is not working with this app due to recent updates I am working to fix it (but am finding really hard). You can track updates [here](https://github.com/oscartbeaumont/ElectronPlayer/issues/31) and [here](https://github.com/electron/electron/issues/16285). - 14/06
+### If your Netflix player is not working please update as I have pushed a bug fix. - 16/06
 
 [![Build Status](https://travis-ci.org/oscartbeaumont/ElectronPlayer.svg?branch=master)](https://travis-ci.org/oscartbeaumont/ElectronPlayer)
 [![ElectronPlayer](https://snapcraft.io/electronplayer/badge.svg)](https://snapcraft.io/electronplayer)
