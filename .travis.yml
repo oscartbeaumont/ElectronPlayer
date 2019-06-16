@@ -19,7 +19,10 @@ addons:
     packages:
       - graphviz
 
-install: yarn --pure-lockfile
+install:
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ln -s package.linux.json package.json; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then ln -s package.mac.json package.json; fi
+  - yarn --pure-lockfile
 
 script:
   - yarn test

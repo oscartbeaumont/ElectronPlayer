@@ -1,5 +1,5 @@
-ElectronPlayer
---------------
+## ElectronPlayer
+
 ### Currently Netflix is not working with this app due to recent updates I am working to fix it (but am finding really hard). You can track updates [here](https://github.com/oscartbeaumont/ElectronPlayer/issues/31) and [here](https://github.com/electron/electron/issues/16285). - 14/06
 
 [![Build Status](https://travis-ci.org/oscartbeaumont/ElectronPlayer.svg?branch=master)](https://travis-ci.org/oscartbeaumont/ElectronPlayer)
@@ -57,15 +57,24 @@ A huge thanks to the following people for contributing and helping shape this pr
 
 # Developing
 
+Sorry in advance that build system currently to get the app working is a mess and requires multiple package.json's this will hopefully be fixed in the future. Please contact me if you need help.
+
 ```bash
 git clone https://github.com/oscartbeaumont/ElectronPlayer.git
 cd ElectronPlayer/
-yarn
-yarn start
+
+# For Linux
+ln -s package.linux.json package.json
+# For Mac
+ln -s package.mac.json package.json
+
+npm install
+npm start
 ```
 
 # TODO
 
+- Auto Restarting The Player Not Working On Linux - Maybe Resort to Old Slow Way
 - Updated Electron Widevine
 - Update All DEPS
 - Add Tests

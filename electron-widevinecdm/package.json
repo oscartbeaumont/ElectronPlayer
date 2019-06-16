@@ -1,0 +1,16 @@
+{
+  "name": "electron-widevinecdm",
+  "version": "0.0.1",
+  "description": "TODO",
+  "main": "src/main.js",
+  "repository": "https://github.com/oscartbeaumont-ext/electron-widevinecdm-dev.git",
+  "author": "Oscar Beaumont <oscar@otbeaumont.me>",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "node scripts/install.js",
+    "test": "cd example && yarn && yarn test"
+  },
+  "dependencies": {
+    "extract-zip": "^1.6.7"
+  }
+}
