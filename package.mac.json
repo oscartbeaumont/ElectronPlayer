@@ -1,6 +1,6 @@
 {
   "name": "electronplayer",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch, Floatplane And More",
   "main": "src/main.js",
   "scripts": {
@@ -28,6 +28,7 @@
       "target": "msi"
     },
     "snap": {
+      "confinement": "classic",
       "plugs": ["default", "screen-inhibit-control"]
     },
     "linux": {
