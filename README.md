@@ -74,7 +74,6 @@ npm start
 
 # TODO
 
-- Auto Restarting The Player Not Working On Linux - Maybe Resort to Old Slow Way
 - Updated Electron Widevine
 - Update All DEPS
 - Add Tests

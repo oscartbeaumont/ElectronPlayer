@@ -83,14 +83,15 @@ function createWindow() {
   // This provides a method for updating the configuration over time
   if (store.get('version') === app.getVersion()) {
     // Update Not Required For Client
-  } else if (
-    store.get('version') === '2.0.4' && // TODO: Allow this to be automatic and work again for future releases
-    store.get('services').length === 4
-  ) {
-    // Automatic Config Update
-    store.set('services', require('./default-services'));
-    store.set('version', app.getVersion());
-    console.log('Automatically updated default services in your config');
+    // TODO: Make this automatic detection and updating more stable then release
+    // } else if (
+    //   store.get('version') === '2.0.4' && // TODO: Allow this to be automatic and work again for future releases
+    //   store.get('services').length === 4
+    // ) {
+    //   // Automatic Config Update
+    //   store.set('services', require('./default-services'));
+    //   store.set('version', app.getVersion());
+    //   console.log('Automatically updated default services in your config');
   } else {
     // Manual Config Update
     let options = {
@@ -110,7 +111,6 @@ function createWindow() {
     if (response == 0) {
       store.clear();
       app.emit('relaunch');
-      app.exit();
       console.log('Reset Configuration and Restarting Electron');
       return;
     } else {
@@ -174,7 +174,10 @@ function broswerWindowDomReady() {
     store.get('options.pictureInPicture') ||
     store.get('options.hideWindowFrame')
   ) {
-    mainWindow.webContents.executeJavaScript(headerScript);
+    // TODO: This is a temp fix and a propper fix should be developed
+    if (mainWindow != null) {
+      mainWindow.webContents.executeJavaScript(headerScript);
+    }
   }
 }
 
@@ -191,7 +194,9 @@ app.on('relaunch', () => {
   console.log('Relaunching The Application!');
 
   // Store details to remeber when relaunched
-  store.set('relaunch.toPage', mainWindow.webContents.getURL());
+  if (mainWindow.webContents.getURL() != '') {
+    store.set('relaunch.toPage', mainWindow.webContents.getURL());
+  }
   store.set('relaunch.windowDetails', {
     position: mainWindow.getPosition(),
     size: mainWindow.getSize()
