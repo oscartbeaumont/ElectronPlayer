@@ -28,12 +28,17 @@
       "target": "msi"
     },
     "snap": {
-      "confinement": "classic",
-      "plugs": ["default", "screen-inhibit-control"]
+      "plugs": [
+        "default",
+        "screen-inhibit-control"
+      ]
     },
     "linux": {
       "category": "Video",
-      "target": ["AppImage", "snap"]
+      "target": [
+        "AppImage",
+        "snap"
+      ]
     }
   }
 }
