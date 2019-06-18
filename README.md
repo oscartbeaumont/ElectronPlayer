@@ -1,7 +1,7 @@
 ## ElectronPlayer
 
 ### If your Snap won't launch it is due to the Netflix bug fix. Uninstall the snap and reinstall with the flag `--devmode`. This is only a temporary fix and a better patch will be released soon. - 16/06
-### If your Netflix player is not working please update as I have pushed a bug fix. - 16/06
+### A recap of the mess this project is in from the last few days is documented [here](https://github.com/oscartbeaumont/ElectronPlayer/issues/33#issuecomment-503140054) - 18/06
 
 [![Build Status](https://travis-ci.org/oscartbeaumont/ElectronPlayer.svg?branch=master)](https://travis-ci.org/oscartbeaumont/ElectronPlayer)
 [![ElectronPlayer](https://snapcraft.io/electronplayer/badge.svg)](https://snapcraft.io/electronplayer)
