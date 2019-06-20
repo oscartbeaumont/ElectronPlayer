@@ -13,10 +13,10 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "https://github.com/castlabs/electron-releases#v5.0.4-wvvmp",
-    "electron-builder": "^20.43.0"
+    "electron-builder": "^20.44.2"
   },
   "dependencies": {
-    "electron-store": "^3.3.0"
+    "electron-store": "https://github.com/oscartbeaumont-ext/electron-store.git"
   },
   "build": {
     "appId": "me.otbeaumont.ElectronPlayer",
