@@ -2,7 +2,8 @@
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
 const fs = require('fs'),
   path = require('path'),
-  Store = require('electron-store');
+  Store = require('electron-store'),
+  isEqual = require('./is-equal-helper.js');
 
 const headerScript = fs.readFileSync(
   path.join(__dirname, 'client-header.js'),
@@ -80,43 +81,43 @@ function createWindow() {
     console.log('Initialised Services In The Config!');
   }
 
+  // Load The Services From The Configuration (And Set The Default If Not Already Set)
+  if (!store.get('services')) {
+    store.set('version', app.getVersion());
+    store.set('services', require('./default-services'));
+    console.log('Initialised Services In The Config!');
+  }
+
   // This provides a method for updating the configuration over time
-  if (store.get('version') === app.getVersion()) {
-    // Update Not Required For Client
-    // TODO: Make this automatic detection and updating more stable then release
-    // } else if (
-    //   store.get('version') === '2.0.4' && // TODO: Allow this to be automatic and work again for future releases
-    //   store.get('services').length === 4
-    // ) {
-    //   // Automatic Config Update
-    //   store.set('services', require('./default-services'));
-    //   store.set('version', app.getVersion());
-    //   console.log('Automatically updated default services in your config');
-  } else {
-    // Manual Config Update
-    let options = {
-      type: 'question',
-      buttons: ['Yes', 'Defer'],
-      defaultId: 0,
-      title: 'Reset your ElectronPlayer configuration?',
-      message:
-        'Do you want to reset your ElectronPlayer config due to a breaking change in the latest update?',
-      detail:
-        'If you customized your config or options, these will be lost. Defering WILL cause CRASHING and BUGS but can be used to backup your config before resetting it using the options menu.',
-      checkboxChecked: true
-    };
-
-    const response = dialog.showMessageBox(null, options);
-
-    if (response == 0) {
-      store.clear();
-      app.emit('relaunch');
-      console.log('Reset Configuration and Restarting Electron');
-      return;
+  if (store.get('version') !== app.getVersion()) {
+    if (isEqual(store.get('services'), require('./default-services.js'))) {
+      store.set('version', app.getVersion());
     } else {
-      console.log(
-        'All Hell is breaking loose! You should backup your config and reset it as fast as possible!'
-      );
+      // Manual Config Update
+      let options = {
+        type: 'question',
+        buttons: ['Yes', 'Defer'],
+        defaultId: 0,
+        title: 'Reset your ElectronPlayer configuration?',
+        message:
+          'Do you want to reset your ElectronPlayer config due to a breaking change in the latest update?',
+        detail:
+          'If you customized your config or options, these will be lost. Defering WILL cause CRASHING and BUGS but can be used to backup your config before resetting it using the options menu.',
+        checkboxChecked: true
+      };
+
+      const response = dialog.showMessageBox(null, options);
+
+      if (response == 0) {
+        store.clear();
+        app.emit('relaunch');
+        console.log('Reset Configuration and Restarting Electron');
+        return;
+      } else {
+        console.log(
+          'All Hell is breaking loose! You should backup your config and reset it as fast as possible!'
+        );
+      }
     }
   }
   global.services = store.get('services');
