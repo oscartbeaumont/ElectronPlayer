@@ -26,5 +26,12 @@ module.exports = [
     url: 'https://floatplane.com/',
     color: '#00aeef',
     style: {}
+  },
+  {
+    name: 'Hulu',
+    logo: 'services/hulu.svg',
+    url: 'https://www.hulu.com/',
+    color: '#00aeef',
+    style: {}
   }
 ];
