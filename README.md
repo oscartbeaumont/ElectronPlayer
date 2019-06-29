@@ -1,7 +1,5 @@
 ## ElectronPlayer
 
-### The Snap and Netflix Player have both been fixed. Sorry for the inconvenience if they were broken for you. A recap of what happened can been seen [here](https://github.com/oscartbeaumont/ElectronPlayer/releases/tag/v2.0.7). Please update if you are still experiencing any issues.
-
 [![Build Status](https://travis-ci.org/oscartbeaumont/ElectronPlayer.svg?branch=master)](https://travis-ci.org/oscartbeaumont/ElectronPlayer)
 [![ElectronPlayer](https://snapcraft.io/electronplayer/badge.svg)](https://snapcraft.io/electronplayer)
 
