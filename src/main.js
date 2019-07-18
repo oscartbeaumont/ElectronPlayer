@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
 const fs = require('fs'),
   path = require('path'),
+  { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron'),
   Store = require('electron-store'),
   isEqual = require('./is-equal-helper.js');
 
@@ -28,7 +28,8 @@ function createWindow() {
     height: 600,
     webPreferences: {
       nodeIntegration: false,
-      contextIsolation: false,
+      nodeIntegrationInWorker: false,
+      contextIsolation: false, // Must be disabled for preload script. I am not aware of a workaround but this *shouldn't* effect security
       plugins: true,
       preload: path.join(__dirname, 'client-preload.js')
     },
@@ -165,6 +166,32 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  // Emitted when website requests permissions - Electron default allows any permission this restricts websites
+  mainWindow.webContents.session.setPermissionRequestHandler(
+    (webContents, permission, callback) => {
+      let websiteOrigin = new URL(webContents.getURL()).origin;
+      let service = store
+        .get('services')
+        .find(service => new URL(service.url).origin == websiteOrigin);
+
+      if (
+        service &&
+        service.permissions &&
+        service.permissions.includes(permission)
+      ) {
+        console.log(
+          `Allowed Requested Browser Permission '${permission}' For Site '${websiteOrigin}'`
+        );
+        return callback(true);
+      }
+
+      console.log(
+        `Rejected Requested Browser Permission '${permission}' For Site '${websiteOrigin}'`
+      );
+      return callback(false);
+    }
+  );
 }
 
 // This method is called when the broswer window's dom is ready
@@ -244,3 +271,21 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+/* Restrict Electrons APIs In Renderer Process For Security */
+
+function rejectEvent(event) {
+  event.preventDefault();
+}
+
+const allowedGlobals = new Set(['services']);
+app.on('remote-get-global', (event, webContents, globalName) => {
+  if (!allowedGlobals.has(globalName)) {
+    event.preventDefault();
+  }
+});
+app.on('remote-require', rejectEvent);
+app.on('remote-get-builtin', rejectEvent);
+app.on('remote-get-current-window', rejectEvent);
+app.on('remote-get-current-web-contents', rejectEvent);
+app.on('remote-get-guest-web-contents', rejectEvent);

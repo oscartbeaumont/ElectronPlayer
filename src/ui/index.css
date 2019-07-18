@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro'); /* TODO: Include With The App */
-
 body {
   -webkit-app-region: drag;
   margin: 0;
@@ -14,7 +12,8 @@ body.loading .services {
 }
 
 h3 {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
 }
 
 .services {
