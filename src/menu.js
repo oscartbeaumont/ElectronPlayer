@@ -1,14 +1,33 @@
 const { Menu, shell } = require('electron');
 const path = require('path');
 
-module.exports = (store, mainWindow, app) => {
+module.exports = (store, services, mainWindow, app) => {
   var servicesMenuItems = [];
   var defaultServiceMenuItems = [];
-  var services = store.get('services');
 
   if (services !== undefined) {
-    for (var i = 0; i < services.length; i++) {
-      let service = services[i];
+    services.forEach(service => {
+      // add service to the default service selection menu items array
+      defaultServiceMenuItems.push({
+        label: service.name,
+        type: 'checkbox',
+        click(e) {
+          e.menu.items.forEach(e => {
+            if (!(e.label === service.name)) e.checked = false;
+          });
+          store.set('options.defaultService', service.name);
+        },
+        checked: store.get('options.defaultService')
+          ? store.get('options.defaultService') == service.name
+          : false
+      });
+
+      // skip if service is hidden
+      if (service.hidden) {
+        return;
+      }
+
+      // add service to the menu items array
       servicesMenuItems.push({
         label: service.name,
         click() {
@@ -17,20 +36,7 @@ module.exports = (store, mainWindow, app) => {
           mainWindow.webContents.send('run-loader', service);
         }
       });
-      defaultServiceMenuItems.push({
-        label: service.name,
-        type: 'checkbox',
-        click(e) {
-          e.menu.items.forEach(e => {
-            if (e.label === service.name) e.checked = false;
-          });
-          store.set('options.defaultService', service);
-        },
-        checked: store.get('options.defaultService')
-          ? store.get('options.defaultService').name === service.name
-          : false
-      });
-    }
+    });
   }
 
   return Menu.buildFromTemplate([
@@ -116,7 +122,7 @@ module.exports = (store, mainWindow, app) => {
               type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  if (e.label === 'Menu') e.checked = false;
+                  if (!(e.label === 'Menu')) e.checked = false;
                 });
                 store.delete('options.defaultService');
               },
@@ -127,7 +133,7 @@ module.exports = (store, mainWindow, app) => {
               type: 'checkbox',
               click(e) {
                 e.menu.items.forEach(e => {
-                  if (e.label === 'Last Opened Page') e.checked = false;
+                  if (!(e.label === 'Last Opened Page')) e.checked = false;
                 });
                 store.set('options.defaultService', 'lastOpenedPage');
               },

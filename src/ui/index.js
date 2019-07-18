@@ -20,6 +20,7 @@ function createElement(tag, initialClass = null, style = null) {
   return elem;
 }
 
+// TODO: This is what is causing this issue lol
 function animateLoader(service, img) {
   // create loader element
   let loader = createElement('div', 'loader', {
@@ -51,6 +52,11 @@ function animateLoader(service, img) {
 
 // initialize services
 services.forEach(service => {
+  // skip if service is hidden
+  if (service.hidden) {
+    return;
+  }
+
   // create service element
   let elem = createElement('a', 'service');
   elem.setAttribute('href', '#');

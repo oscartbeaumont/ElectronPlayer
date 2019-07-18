@@ -1,9 +1,8 @@
 // Modules to control application life and create native browser window
 const fs = require('fs'),
   path = require('path'),
-  { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron'),
-  Store = require('electron-store'),
-  isEqual = require('./is-equal-helper.js');
+  { app, BrowserWindow, Menu, ipcMain } = require('electron'),
+  Store = require('electron-store');
 
 const headerScript = fs.readFileSync(
   path.join(__dirname, 'client-header.js'),
@@ -14,7 +13,6 @@ const headerScript = fs.readFileSync(
 let mainWindow; // Global Windows Object
 const menu = require('./menu');
 const store = new Store();
-global.services = [];
 
 //Load Widevine Only On Mac - Castlab Electron is used for all other platforms
 if (process.platform == 'darwin') {
@@ -24,7 +22,7 @@ if (process.platform == 'darwin') {
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 890,
     height: 600,
     webPreferences: {
       nodeIntegration: false,
@@ -75,56 +73,38 @@ function createWindow() {
     app.dock.show();
   }
 
-  // Load The Services From The Configuration (And Set The Default If Not Already Set)
-  if (!store.get('services')) {
+  // Detect and update version
+  if (!store.get('version')) {
     store.set('version', app.getVersion());
-    store.set('services', require('./default-services'));
-    console.log('Initialised Services In The Config!');
+    store.set('services', []);
+    console.log('Initialised Config!');
   }
 
-  // Load The Services From The Configuration (And Set The Default If Not Already Set)
-  if (!store.get('services')) {
-    store.set('version', app.getVersion());
-    store.set('services', require('./default-services'));
-    console.log('Initialised Services In The Config!');
-  }
+  // Load the services and merge the users and default services
+  let userServices = store.get('services') || [];
+  global.services = userServices;
 
-  // This provides a method for updating the configuration over time
-  if (store.get('version') !== app.getVersion()) {
-    if (isEqual(store.get('services'), require('./default-services.js'))) {
-      store.set('version', app.getVersion());
-    } else {
-      // Manual Config Update
-      let options = {
-        type: 'question',
-        buttons: ['Yes', 'Defer'],
-        defaultId: 0,
-        title: 'Reset your ElectronPlayer configuration?',
-        message:
-          'Do you want to reset your ElectronPlayer config due to a breaking change in the latest update?',
-        detail:
-          'If you customized your config or options, these will be lost. Defering WILL cause CRASHING and BUGS but can be used to backup your config before resetting it using the options menu.',
-        checkboxChecked: true
+  require('./default-services').forEach(dservice => {
+    let service = userServices.find(service => service.name == dservice.name);
+    if (service) {
+      global.services[userServices.indexOf(service)] = {
+        name: service.name ? service.name : dservice.name,
+        logo: service.logo ? service.logo : dservice.logo,
+        url: service.url ? service.url : dservice.url,
+        color: service.color ? service.color : dservice.color,
+        style: service.style ? service.style : dservice.style,
+        permissions: service.permissions
+          ? service.permissions
+          : dservice.permissions,
+        hidden: service.hidden ? service.hidden : dservice.hidden
       };
-
-      const response = dialog.showMessageBox(null, options);
-
-      if (response == 0) {
-        store.clear();
-        app.emit('relaunch');
-        console.log('Reset Configuration and Restarting Electron');
-        return;
-      } else {
-        console.log(
-          'All Hell is breaking loose! You should backup your config and reset it as fast as possible!'
-        );
-      }
+    } else {
+      global.services.push(dservice);
     }
-  }
-  global.services = store.get('services');
+  });
 
   // Create The Menubar
-  Menu.setApplicationMenu(menu(store, mainWindow, app));
+  Menu.setApplicationMenu(menu(store, global.services, mainWindow, app));
 
   // Load the UI or the Default Service
   let defaultService = store.get('options.defaultService'),
@@ -139,8 +119,18 @@ function createWindow() {
     console.log('Loading The Last Opened Page ' + lastOpenedPage);
     mainWindow.loadURL(lastOpenedPage);
   } else if (defaultService != undefined) {
-    console.log('Loading The Default Service ' + defaultService.url);
-    mainWindow.loadURL(defaultService.url);
+    defaultService = global.services.find(
+      service => service.name == defaultService
+    );
+    if (defaultService.url) {
+      console.log('Loading The Default Service ' + defaultService.url);
+      mainWindow.loadURL(defaultService.url);
+    } else {
+      console.log(
+        "Error Default Service Doesn't Have A URL Set. Falling back to the menu."
+      );
+      mainWindow.loadFile('src/ui/index.html');
+    }
   } else {
     console.log('Loading The Main Menu');
     mainWindow.loadFile('src/ui/index.html');
@@ -151,11 +141,19 @@ function createWindow() {
     if (store.get('options.defaultService') == 'lastOpenedPage') {
       store.set('options.lastOpenedPage', mainWindow.webContents.getURL());
     }
+
     if (store.get('options.windowDetails')) {
-      store.set('options.windowDetails', {
-        position: mainWindow.getPosition(),
-        size: mainWindow.getSize()
-      });
+      if (mainWindow) {
+        store.set('options.windowDetails', {
+          position: mainWindow.getPosition(),
+          size: mainWindow.getSize()
+        });
+      } else {
+        console.error(
+          'Error window was not defined while trying to save windowDetails'
+        );
+        return;
+      }
     }
   });
 
@@ -171,9 +169,9 @@ function createWindow() {
   mainWindow.webContents.session.setPermissionRequestHandler(
     (webContents, permission, callback) => {
       let websiteOrigin = new URL(webContents.getURL()).origin;
-      let service = store
-        .get('services')
-        .find(service => new URL(service.url).origin == websiteOrigin);
+      let service = global.services.find(
+        service => new URL(service.url).origin == websiteOrigin
+      );
 
       if (
         service &&
