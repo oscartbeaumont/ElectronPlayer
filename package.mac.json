@@ -18,27 +18,5 @@
   "dependencies": {
     "electron-store": "https://github.com/oscartbeaumont-ext/electron-store.git",
     "electron-widevinecdm": "./electron-widevinecdm"
-  },
-  "build": {
-    "appId": "me.otbeaumont.ElectronPlayer",
-    "mac": {
-      "category": "public.app-category.entertainment"
-    },
-    "win": {
-      "target": "msi"
-    },
-    "snap": {
-      "plugs": [
-        "default",
-        "screen-inhibit-control"
-      ]
-    },
-    "linux": {
-      "category": "Video",
-      "target": [
-        "AppImage",
-        "snap"
-      ]
-    }
   }
 }
