@@ -115,6 +115,31 @@ module.exports = (store, services, mainWindow, app) => {
           visible: process.platform === 'darwin'
         },
         {
+          label: 'Adblock *',
+          type: 'checkbox',
+          click(e) {
+            store.set('options.adblock', e.checked);
+
+            console.log('Relaunching The Application!');
+
+            // Store details to remeber when relaunched
+            if (mainWindow.webContents.getURL() != '') {
+              store.set('relaunch.toPage', mainWindow.webContents.getURL());
+            }
+            store.set('relaunch.windowDetails', {
+              position: mainWindow.getPosition(),
+              size: mainWindow.getSize()
+            });
+
+            // Restart the app
+            app.relaunch();
+            app.quit();
+          },
+          checked: store.get('options.adblock')
+            ? store.get('options.adblock')
+            : false
+        },
+        {
           label: 'Default Service',
           submenu: [
             {
@@ -144,7 +169,7 @@ module.exports = (store, services, mainWindow, app) => {
         {
           label: 'Edit Config',
           click() {
-            shell.openItem(path.join(app.getPath('userData'), 'config.json'));
+            store.openInEditor();
           }
         },
         {
@@ -215,7 +240,7 @@ module.exports = (store, services, mainWindow, app) => {
         {
           label: 'More Information',
           click() {
-            require('electron').shell.openExternal(
+            shell.openExternal(
               'http://github.com/oscartbeaumont/ElectronPlayer'
             );
           }

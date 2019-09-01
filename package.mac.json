@@ -16,7 +16,9 @@
     "electron-builder": "^20.44.2"
   },
   "dependencies": {
+    "@cliqz/adblocker-electron": "^1.0.1",
     "electron-store": "https://github.com/oscartbeaumont-ext/electron-store.git",
-    "electron-widevinecdm": "./electron-widevinecdm"
+    "electron-widevinecdm": "./electron-widevinecdm",
+    "node-fetch": "^2.6.0"
   }
 }

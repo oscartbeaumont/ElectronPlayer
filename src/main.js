@@ -1,8 +1,14 @@
 // Modules to control application life and create native browser window
 const fs = require('fs'),
   path = require('path'),
-  { app, BrowserWindow, Menu, ipcMain } = require('electron'),
-  Store = require('electron-store');
+  { app, BrowserWindow, session, Menu, ipcMain } = require('electron'),
+  Store = require('electron-store'),
+  {
+    ElectronBlocker,
+    fullLists,
+    Request
+  } = require('@cliqz/adblocker-electron'),
+  fetch = require('node-fetch');
 
 const headerScript = fs.readFileSync(
   path.join(__dirname, 'client-header.js'),
@@ -19,7 +25,7 @@ if (process.platform == 'darwin') {
   require('electron-widevinecdm').load(app);
 }
 
-function createWindow() {
+async function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 890,
@@ -42,6 +48,12 @@ function createWindow() {
     toolbar: false,
     backgroundColor: '#00000000'
   });
+
+  // Connect Adblocker To Window if Enabled
+  if (store.get('options.adblock')) {
+    const engine = await ElectronBlocker.fromLists(fetch, fullLists);
+    engine.enableBlockingInSession(session.defaultSession);
+  }
 
   // Reset The Windows Size and Location
   let windowDetails = store.get('options.windowDetails');
