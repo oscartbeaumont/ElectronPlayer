@@ -38,5 +38,13 @@ module.exports = [
     color: '#1ce783',
     style: {},
     permissions: []
+  },
+  {
+    name: 'Amazon Prime Video',
+    logo: 'services/amazon-prime-video.svg',
+    url: 'https://www.primevideo.com/',
+    color: '#46ABE2',
+    style: {},
+    permissions: []
   }
 ];
