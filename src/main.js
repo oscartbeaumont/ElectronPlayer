@@ -174,9 +174,7 @@ async function createWindow() {
   mainWindow.webContents.on('dom-ready', broswerWindowDomReady);
 
   // Emitted when the window is closed.
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+  mainWindow.on('closed', mainWindowClosed);
 
   // Emitted when website requests permissions - Electron default allows any permission this restricts websites
   mainWindow.webContents.session.setPermissionRequestHandler(
@@ -220,6 +218,11 @@ function broswerWindowDomReady() {
   }
 }
 
+// Run when window is closed. This cleans up the mainWindow object to save resources.
+function mainWindowClosed() {
+  mainWindow = null;
+}
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // The timeout fixes the trasparent background on Linux ???? why
@@ -243,6 +246,11 @@ app.on('relaunch', () => {
 
   // Destory The BroswerWindow
   mainWindow.webContents.removeListener('dom-ready', broswerWindowDomReady);
+
+  // Remove App Close Listener
+  mainWindow.removeListener('closed', mainWindowClosed);
+
+  // Close App
   mainWindow.close();
   mainWindow = undefined;
 

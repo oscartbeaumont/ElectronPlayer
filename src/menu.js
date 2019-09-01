@@ -186,7 +186,10 @@ module.exports = (store, services, mainWindow, app) => {
           label: 'Reset all settings *',
           click() {
             store.clear();
-            app.emit('relaunch');
+
+            // Restart the app
+            app.relaunch();
+            app.quit();
           }
         },
         { label: '* Means App Will Restart', enabled: false }
