@@ -3,25 +3,31 @@
 [![Build Status](https://travis-ci.org/oscartbeaumont/ElectronPlayer.svg?branch=master)](https://travis-ci.org/oscartbeaumont/ElectronPlayer)
 [![ElectronPlayer](https://snapcraft.io/electronplayer/badge.svg)](https://snapcraft.io/electronplayer)
 
-An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch, Floatplane And More. This is the successor to [Netflix-Desktop](https://github.com/oscartbeaumont/Netflix-Desktop).
+An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch, Floatplane, Hulu, Amazon Prime Video And More. This is the successor to [Netflix-Desktop](https://github.com/oscartbeaumont/Netflix-Desktop).
 
 ![ElectronPlayer Menu](docs/ElectronPlayer.png)
 
 _The apps main menu interface_
 
+## The Pain of Widevine
+
+People using this app should be aware of its difficultly to maintain due to the requirement of Widevine. Widevine is a DRM plugin created by Google and it is used by Netflix, Hulu and many other streaming services. Widevine has already caused an outright fail of Netflix within this app and the only solution I could find ended up with the app having multiple `package.json` files one for each os. They also each use different versions of Electron. The Mac version is using the older version of Electron and it is locked on a version which was published on the 5th of June 2019. Unless a fix presents itself this app will be discontinued in its current form when Netflix stop working on Mac. I have no clue when that will be but my guess is 1-2 years because I am sadly not expecting any working solutions to come foward. The only other possible solution is obtaining a Widevine signing certificate from Google. Which is not possible due to this being a "small" open source project. I may also [copy metastream](https://github.com/samuelmaddock/metastream/issues/85) and move the app to a browser based PWA instead of fully discontinuing it. A good article about this issue can be [read here](https://blog.samuelmaddock.com/posts/google-widevine-blocked-my-browser/).
+
 # Features
 
-- Rough Mac Picture in Picture Support (Floating Window, Above All Desktop and Fullscreen Applications)
-- Always On Top Window
-- Frameless Window
 - Multiple Streaming Services Support (JSON Configuration to add extra)
+- Adblock
+- Always On Top Window
 - Set Startup Page (Any Service or Remember Last Opended Page)
+- Frameless Window
+- Rough Mac Picture in Picture Support (Floating Window, Above All Desktop and Fullscreen Applications)
+- Full Screen Window on Startup
 
 # Installation
 
 ## Windows
 
-**Please note Windows is currently only partially supported, as it doesn't support the Widevine package I am using. I am working on fixing this. Its progress can be loosely tracked in issue [#2](https://github.com/oscartbeaumont/ElectronPlayer/issues/2)**
+Please note Windows is currently only partially supported, as it doesn't support the Widevine package I am using. I am working on fixing this. Its progress can be loosely tracked in issue [#2](https://github.com/oscartbeaumont/ElectronPlayer/issues/2) and issue [#35](https://github.com/oscartbeaumont/ElectronPlayer/issues/35)
 
 ## macOS
 
@@ -72,14 +78,10 @@ npm start
 
 # TODO
 
-- Updated Electron Widevine
-- Update All DEPS
-- Add Tests
-- Add Windows Build Support
-- Add Greenkeeper Bot
+- Add Tests - once Electron versions are the same between Mac and Linux
+- Add Windows Support
+- Add Dependency Updates Alerter Bot
 
 ## Should fix at some point
 
 - Menubar Transparency Glitch On Mac
-- Netflix breaks when relaunching window (eg. Enabling PIP)
-- Possibly Add Code Signing
