@@ -140,6 +140,16 @@ module.exports = (store, services, mainWindow, app) => {
             : false
         },
         {
+          label: 'Start in Fullscreen',
+          type: 'checkbox',
+          click(e) {
+            store.set('options.launchFullscreen', e.checked);
+          },
+          checked: store.get('options.launchFullscreen')
+            ? store.get('options.launchFullscreen')
+            : false
+        },
+        {
           label: 'Default Service',
           submenu: [
             {

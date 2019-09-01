@@ -46,7 +46,8 @@ async function createWindow() {
       : !store.get('options.hideWindowFrame'),
     alwaysOnTop: store.get('options.alwaysOnTop'),
     toolbar: false,
-    backgroundColor: '#00000000'
+    backgroundColor: '#00000000',
+    fullscreen: store.get('options.launchFullscreen')
   });
 
   // Connect Adblocker To Window if Enabled
