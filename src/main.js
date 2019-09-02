@@ -52,8 +52,26 @@ async function createWindow() {
 
   // Connect Adblocker To Window if Enabled
   if (store.get('options.adblock')) {
-    const engine = await ElectronBlocker.fromLists(fetch, fullLists);
+    let engineCachePath = path.join(
+      app.getPath('userData'),
+      'adblock-engine-cache.txt'
+    );
+
+    if (fs.existsSync(engineCachePath)) {
+      console.log('Adblock engine cache found. Loading it into app.');
+      var engine = await ElectronBlocker.deserialize(
+        fs.readFileSync(engineCachePath)
+      );
+    } else {
+      var engine = await ElectronBlocker.fromLists(fetch, fullLists);
+    }
     engine.enableBlockingInSession(session.defaultSession);
+
+    // Backup Engine Cache to Disk
+    fs.writeFile(engineCachePath, engine.serialize(), err => {
+      if (err) throw err;
+      console.log('Adblock Engine file cache has been updated!');
+    });
   }
 
   // Reset The Windows Size and Location
@@ -151,10 +169,12 @@ async function createWindow() {
 
   // Emitted when the window is closing
   mainWindow.on('close', e => {
+    // Save open service if lastOpenedPage is the default service
     if (store.get('options.defaultService') == 'lastOpenedPage') {
       store.set('options.lastOpenedPage', mainWindow.webContents.getURL());
     }
 
+    // If enabled store the window details so they can be restored upon restart
     if (store.get('options.windowDetails')) {
       if (mainWindow) {
         store.set('options.windowDetails', {
