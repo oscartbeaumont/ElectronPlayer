@@ -205,9 +205,10 @@ async function createWindow() {
       );
 
       if (
-        service &&
-        service.permissions &&
-        service.permissions.includes(permission)
+        (service &&
+          service.permissions &&
+          service.permissions.includes(permission)) ||
+        permission == 'fullscreen'
       ) {
         console.log(
           `Allowed Requested Browser Permission '${permission}' For Site '${websiteOrigin}'`
