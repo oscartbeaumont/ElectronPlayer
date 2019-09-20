@@ -171,7 +171,7 @@ async function createWindow() {
   mainWindow.on('close', e => {
     // Save open service if lastOpenedPage is the default service
     if (store.get('options.defaultService') == 'lastOpenedPage') {
-      store.set('options.lastOpenedPage', mainWindow.webContents.getURL());
+      store.set('options.lastOpenedPage', mainWindow.getURL());
     }
 
     // If enabled store the window details so they can be restored upon restart
@@ -257,8 +257,8 @@ app.on('relaunch', () => {
   console.log('Relaunching The Application!');
 
   // Store details to remeber when relaunched
-  if (mainWindow.webContents.getURL() != '') {
-    store.set('relaunch.toPage', mainWindow.webContents.getURL());
+  if (mainWindow.getURL() != '') {
+    store.set('relaunch.toPage', mainWindow.getURL());
   }
   store.set('relaunch.windowDetails', {
     position: mainWindow.getPosition(),
@@ -282,7 +282,7 @@ app.on('relaunch', () => {
 // Chnage the windows url when told to by the ui
 ipcMain.on('open-url', (e, service) => {
   console.log('Changing URL To: ' + service.url);
-  mainWindow.webContents.loadURL(service.url);
+  mainWindow.loadURL(service.url);
 });
 
 // Disable fullscreen when button pressed

@@ -1,5 +1,7 @@
 const { Menu, shell } = require('electron');
+const userPrompt = require('electron-osx-prompt');
 const path = require('path');
+const fs = require('fs');
 
 module.exports = (store, services, mainWindow, app) => {
   var servicesMenuItems = [];
@@ -32,8 +34,8 @@ module.exports = (store, services, mainWindow, app) => {
         label: service.name,
         click() {
           console.log('Changing URL To: ' + service.url);
-          mainWindow.webContents.loadURL(service.url);
-          mainWindow.webContents.send('run-loader', service);
+          mainWindow.loadURL(service.url);
+          mainWindow.send('run-loader', service);
         }
       });
     });
@@ -63,6 +65,26 @@ module.exports = (store, services, mainWindow, app) => {
           click() {
             console.log('Change To The Menu');
             mainWindow.loadFile('src/ui/index.html');
+          }
+        },
+        {
+          label: 'Custom Url',
+          accelerator: 'CmdOrCtrl+O',
+          click() {
+            userPrompt(
+              'Open URL?',
+              'https://google.com',
+              path.join(__dirname, 'open-logo.png')
+            )
+              .then(inputtedURL => {
+                if (inputtedURL != '' && inputtedURL != null) {
+                  console.log('Opening Custom URL: ' + inputtedURL);
+                  mainWindow.loadURL(inputtedURL);
+                }
+              })
+              .catch(err => {
+                console.error(err);
+              });
           }
         }
       ].concat(servicesMenuItems)
@@ -120,11 +142,9 @@ module.exports = (store, services, mainWindow, app) => {
           click(e) {
             store.set('options.adblock', e.checked);
 
-            console.log('Relaunching The Application!');
-
             // Store details to remeber when relaunched
-            if (mainWindow.webContents.getURL() != '') {
-              store.set('relaunch.toPage', mainWindow.webContents.getURL());
+            if (mainWindow.getURL() != '') {
+              store.set('relaunch.toPage', mainWindow.getURL());
             }
             store.set('relaunch.windowDetails', {
               position: mainWindow.getPosition(),
@@ -185,7 +205,15 @@ module.exports = (store, services, mainWindow, app) => {
         {
           label: 'Reset all settings *',
           click() {
+            // Reset Config
             store.clear();
+
+            // Clear Engine Cache
+            let engineCachePath = path.join(
+              app.getPath('userData'),
+              'adblock-engine-cache.txt'
+            );
+            fs.unlinkSync(engineCachePath);
 
             // Restart the app
             app.relaunch();
