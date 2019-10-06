@@ -1,5 +1,5 @@
 const { Menu, shell } = require('electron');
-const userPrompt = require('electron-osx-prompt');
+const prompt = require('electron-prompt');
 const path = require('path');
 const fs = require('fs');
 
@@ -71,20 +71,26 @@ module.exports = (store, services, mainWindow, app) => {
           label: 'Custom Url',
           accelerator: 'CmdOrCtrl+O',
           click() {
-            userPrompt(
-              'Open URL?',
-              'https://google.com',
-              path.join(__dirname, 'open-logo.png')
-            )
-              .then(inputtedURL => {
-                if (inputtedURL != '' && inputtedURL != null) {
-                  console.log('Opening Custom URL: ' + inputtedURL);
-                  mainWindow.loadURL(inputtedURL);
-                }
-              })
-              .catch(err => {
-                console.error(err);
-              });
+            prompt({
+              title: 'Open Custom URL',
+              label: 'URL:',
+              inputAttrs: {
+                  type: 'url',
+                  placeholder: 'http://example.org'
+              },
+              alwaysOnTop: true
+          })
+          .then(inputtedURL => {
+            if (inputtedURL != null) {
+              if(inputtedURL == '') {
+                inputtedURL = 'http://example.org';
+              }
+
+              console.log('Opening Custom URL: ' + inputtedURL);
+              mainWindow.loadURL(inputtedURL);
+            }
+          })
+          .catch(console.error);
           }
         }
       ].concat(servicesMenuItems)
