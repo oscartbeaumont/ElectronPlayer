@@ -16,6 +16,15 @@ module.exports = [
     permissions: []
   },
   {
+    name: 'YouTube TV',
+    logo: 'services/youtube.svg',
+    url: 'https://youtube.com/tv',
+    color: '#ff0000',
+    style: {},
+    userAgent: "Mozilla/5.0 (SMART-TV; Linux; Tizen 4.0.0.2) AppleWebkit/605.1.15 (KHTML, like Gecko)",
+    permissions: []
+  },
+  {
     name: 'Twitch',
     logo: 'services/twitch.svg',
     url: 'https://twitch.tv',

@@ -27,6 +27,7 @@ if (process.platform == 'darwin') {
 
 // Analytics endpoint
 const simpleAnalyticsEndpoint = "https://esa.otbeaumont.me/api";
+let defaultUserAgent;
 
 async function createWindow() {
   // Create the browser window.
@@ -52,6 +53,8 @@ async function createWindow() {
     backgroundColor: '#00000000',
     fullscreen: store.get('options.launchFullscreen')
   });
+
+  defaultUserAgent = mainWindow.webContents.userAgent;
 
   // Connect Adblocker To Window if Enabled
   if (store.get('options.adblock')) {
@@ -127,6 +130,7 @@ async function createWindow() {
         url: service.url ? service.url : dservice.url,
         color: service.color ? service.color : dservice.color,
         style: service.style ? service.style : dservice.style,
+        userAgent: service.userAgent ? service.userAgent : dservice.userAgent,
         permissions: service.permissions
           ? service.permissions
           : dservice.permissions,
@@ -138,7 +142,7 @@ async function createWindow() {
   });
 
   // Create The Menubar
-  Menu.setApplicationMenu(menu(store, global.services, mainWindow, app));
+  Menu.setApplicationMenu(menu(store, global.services, mainWindow, app, defaultUserAgent));
 
   // Load the UI or the Default Service
   let defaultService = store.get('options.defaultService'),
@@ -159,6 +163,7 @@ async function createWindow() {
     if (defaultService.url) {
       console.log('Loading The Default Service ' + defaultService.url);
       mainWindow.loadURL(defaultService.url);
+      mainWindow.webContents.userAgent = defaultService.userAgent ? defaultService.userAgent : defaultUserAgent;
     } else {
       console.log(
         "Error Default Service Doesn't Have A URL Set. Falling back to the menu."
@@ -317,7 +322,8 @@ app.on('relaunch', () => {
 
 // Chnage the windows url when told to by the ui
 ipcMain.on('open-url', (e, service) => {
-  console.log('Changing URL To: ' + service.url);
+  console.log('Openning Service ' + service.name);
+  mainWindow.webContents.userAgent = service.userAgent ? service.userAgent : defaultUserAgent;
   mainWindow.loadURL(service.url);
 });
 

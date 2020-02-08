@@ -3,7 +3,7 @@ const prompt = require('electron-prompt');
 const path = require('path');
 const fs = require('fs');
 
-module.exports = (store, services, mainWindow, app) => {
+module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
   var servicesMenuItems = [];
   var defaultServiceMenuItems = [];
 
@@ -64,7 +64,9 @@ module.exports = (store, services, mainWindow, app) => {
           accelerator: 'CmdOrCtrl+H',
           click() {
             console.log('Change To The Menu');
+            mainWindow.webContents.userAgent = defaultUserAgent;
             mainWindow.loadFile('src/ui/index.html');
+            
           }
         },
         {
