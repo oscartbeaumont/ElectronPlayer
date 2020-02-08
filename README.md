@@ -24,6 +24,10 @@ People using this app should be aware of its difficultly to maintain due to the 
 - Rough Mac Picture in Picture Support (Floating Window, Above All Desktop and Fullscreen Applications)
 - Full Screen Window on Startup
 
+# Analytics
+
+This application has analytics built in which is used to help the developers make a better product. [Simple Analytics](https://simpleanalytics.com) was chosen due to their strong views on keeping users private. They are also GDPR, CCPA, & PECR compliant. The data collected by the app can be viewed by anyone [here](https://simpleanalytics.com/electronplayer.otbeaumont.me).
+
 # Installation
 
 ## Windows
