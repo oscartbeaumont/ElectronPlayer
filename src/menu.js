@@ -6,39 +6,58 @@ const fs = require('fs');
 module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
   var servicesMenuItems = [];
   var defaultServiceMenuItems = [];
+  var enabledServicesMenuItems = [];
 
   if (services !== undefined) {
-    services.forEach(service => {
-      // add service to the default service selection menu items array
-      defaultServiceMenuItems.push({
-        label: service.name,
-        type: 'checkbox',
-        click(e) {
-          e.menu.items.forEach(e => {
-            if (!(e.label === service.name)) e.checked = false;
-          });
-          store.set('options.defaultService', service.name);
-        },
-        checked: store.get('options.defaultService')
-          ? store.get('options.defaultService') == service.name
-          : false
-      });
-
-      // skip if service is hidden
-      if (service.hidden) {
-        return;
+    // Menu with all services that can be clicked for easy switching
+    servicesMenuItems = services.map(service => ({
+      label: service.name,
+      visible: !service.hidden,
+      click() {
+        console.log('Changing URL To: ' + service.url);
+        mainWindow.loadURL(service.url);
+        mainWindow.send('run-loader', service);
       }
+    }));
 
-      // add service to the menu items array
-      servicesMenuItems.push({
-        label: service.name,
-        click() {
-          console.log('Changing URL To: ' + service.url);
-          mainWindow.loadURL(service.url);
-          mainWindow.send('run-loader', service);
+    // Menu for selecting default service (one which is opened on starting the app)
+    defaultServiceMenuItems = services.map(service => ({
+      label: service.name,
+      type: 'checkbox',
+      checked: store.get('options.defaultService')
+          ? store.get('options.defaultService') == service.name
+          : false,
+      click(e) {
+        e.menu.items.forEach(e => {
+          if (!(e.label === service.name)) e.checked = false;
+        });
+        store.set('options.defaultService', service.name);
+      }
+    }));
+
+    // Menu with all services that can be clicked for easy switching
+    enabledServicesMenuItems = services.map(service => ({
+      label: service.name,
+      type: 'checkbox',
+      checked: !service.hidden,
+      click() {
+        if(service._defaultService) {
+          let currServices = store.get('services');
+          currServices.push({
+            name: service.name,
+            hidden: !service.hidden
+          });
+          services = currServices;
+          store.set('services', currServices);
+        } else {
+          let currServices = store.get('services');
+          let currService = currServices.find(s => service.name == s.name);
+          currService.hidden = !service.hidden
+          services = currServices;
+          store.set('services', currServices);
         }
-      });
-    });
+      }
+    }));
   }
 
   return Menu.buildFromTemplate([
@@ -66,7 +85,6 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
             console.log('Change To The Menu');
             mainWindow.webContents.userAgent = defaultUserAgent;
             mainWindow.loadFile('src/ui/index.html');
-            
           }
         },
         {
@@ -178,6 +196,10 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
             : false
         },
         {
+          label: 'Enabled Services',
+          submenu: enabledServicesMenuItems
+        },
+        {
           label: 'Default Service',
           submenu: [
             {
@@ -201,7 +223,8 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
                 store.set('options.defaultService', 'lastOpenedPage');
               },
               checked: store.get('options.defaultService') === 'lastOpenedPage'
-            }
+            },
+            { type: 'separator' }
           ].concat(defaultServiceMenuItems)
         },
         {

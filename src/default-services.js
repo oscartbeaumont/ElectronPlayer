@@ -17,6 +17,7 @@ module.exports = [
   },
   {
     name: 'YouTube TV',
+    hidden: true,
     logo: 'services/youtube.svg',
     url: 'https://youtube.com/tv',
     color: '#ff0000',
@@ -34,6 +35,7 @@ module.exports = [
   },
   {
     name: 'Floatplane',
+    hidden: true,
     logo: 'services/floatplane.svg',
     url: 'https://floatplane.com/',
     color: '#00aeef',
@@ -42,6 +44,7 @@ module.exports = [
   },
   {
     name: 'Hulu',
+    hidden: true,
     logo: 'services/hulu.svg',
     url: 'https://www.hulu.com/',
     color: '#1ce783',
@@ -50,6 +53,7 @@ module.exports = [
   },
   {
     name: 'Amazon Prime Video',
+    hidden: true,
     logo: 'services/amazon-prime-video.svg',
     url: 'https://www.primevideo.com/',
     color: '#46ABE2',
