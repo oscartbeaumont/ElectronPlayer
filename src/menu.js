@@ -52,7 +52,7 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
         } else {
           let currServices = store.get('services');
           let currService = currServices.find(s => service.name == s.name);
-          currService.hidden = !service.hidden
+          currService.hidden = service.hidden ? undefined : true
           services = currServices;
           store.set('services', currServices);
         }

@@ -134,7 +134,7 @@ async function createWindow() {
         permissions: service.permissions
           ? service.permissions
           : dservice.permissions,
-        hidden: service.hidden ? service.hidden : dservice.hidden,
+        hidden: service.hidden != undefined ? service.hidden : dservice.hidden,
       };
     } else {
       dservice._defaultService = true;

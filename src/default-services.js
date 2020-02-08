@@ -59,5 +59,32 @@ module.exports = [
     color: '#46ABE2',
     style: {},
     permissions: []
+  },
+  {
+    name: 'Disney+',
+    hidden: true,
+    logo: 'services/disney+.svg',
+    url: 'https://www.disneyplus.com/',
+    color: '#ffffff',
+    style: {},
+    permissions: []
+  },
+  {
+    name: 'CBS All Access',
+    hidden: true,
+    logo: 'services/cbs-all-access.png',
+    url: 'https://www.cbs.com/all-access/',
+    color: '#4ca3dd',
+    style: {},
+    permissions: []
+  },
+  {
+    name: 'Vudu',
+    hidden: true,
+    logo: 'services/vudu.svg',
+    url: 'https://vudu.com',
+    color: '#3399ff',
+    style: {},
+    permissions: []
   }
 ];
