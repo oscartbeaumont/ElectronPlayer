@@ -261,7 +261,7 @@ async function createWindow() {
           width: mainWindow.getSize()[0],
           unique: unique,
           timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          urlReferrer: "app"
+          urlReferrer: process.platform
       })
   })
 }
