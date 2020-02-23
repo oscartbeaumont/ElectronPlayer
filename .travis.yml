@@ -7,6 +7,10 @@ os:
   - osx
 #  - windows # TODO: Enable Once Widevine Package Supports Windows
 
+# TEMP Fix: https://travis-ci.community/t/snap-deployment-stopped-working-out-of-nowhere/6908
+deploy:
+  edge: true
+
 cache:
   yarn: true
   directories:
