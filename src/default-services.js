@@ -86,5 +86,13 @@ module.exports = [
     color: '#3399ff',
     style: {},
     permissions: []
+  },
+  {
+    name: 'Crunchyroll',
+    logo: 'services/crunchyroll.png',
+    url: 'https://crunchyroll.com',
+    color: '#ffe600',
+    style: {},
+    permissions: []
   }
 ];
