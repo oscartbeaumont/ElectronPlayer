@@ -54,7 +54,7 @@ module.exports = [
   {
     name: 'Amazon Prime Video',
     hidden: true,
-    logo: 'services/amazon-prime-video.svg',
+    logo: 'services/amazon-prime-video.png',
     url: 'https://www.primevideo.com/',
     color: '#46ABE2',
     style: {},
