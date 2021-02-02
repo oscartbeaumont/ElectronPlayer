@@ -34,24 +34,6 @@ module.exports = [
     permissions: []
   },
   {
-    name: 'Floatplane',
-    hidden: true,
-    logo: 'services/floatplane.svg',
-    url: 'https://floatplane.com/',
-    color: '#00aeef',
-    style: {},
-    permissions: []
-  },
-  {
-    name: 'Hulu',
-    hidden: true,
-    logo: 'services/hulu.svg',
-    url: 'https://www.hulu.com/',
-    color: '#1ce783',
-    style: {},
-    permissions: []
-  },
-  {
     name: 'Amazon Prime Video',
     hidden: true,
     logo: 'services/amazon-prime-video.png',
@@ -70,28 +52,18 @@ module.exports = [
     permissions: []
   },
   {
-    name: 'CBS All Access',
-    hidden: true,
-    logo: 'services/cbs-all-access.png',
-    url: 'https://www.cbs.com/all-access/',
-    color: '#4ca3dd',
-    style: {},
-    permissions: []
-  },
-  {
-    name: 'Vudu',
-    hidden: true,
-    logo: 'services/vudu.svg',
-    url: 'https://vudu.com',
-    color: '#3399ff',
-    style: {},
-    permissions: []
-  },
-  {
     name: 'Crunchyroll',
     logo: 'services/crunchyroll.png',
     url: 'https://crunchyroll.com',
     color: '#ffe600',
+    style: {},
+    permissions: []
+  },
+  {
+    name: 'PlutoTv',
+    logo: 'services/pluto-tv.png',
+    url: 'https://pluto.tv/',
+    color: '#000000',
     style: {},
     permissions: []
   }
