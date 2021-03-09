@@ -6,9 +6,7 @@
   "scripts": {
     "start": "electron .",
     "test": "echo 'TODO: Tests'",
-    "build": "electron-builder -c build/electron-builder.yml -c build/electron-builder.castlabs.yml -p never",
-    "build_rpm": "electron-builder build --linux rpm",
-    "build_all": "npm run build && npm run build_rpm"
+    "build": "electron-builder -c build/electron-builder.yml -c build/electron-builder.castlabs.yml -p never"
   },
   "repository": "https://github.com/ToMattBan/ElectronPlayer.git",
   "author": "ToMatt <souaquelecleyton@gmail.com>",
