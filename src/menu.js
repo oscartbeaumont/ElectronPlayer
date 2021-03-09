@@ -60,7 +60,7 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
     }));
   }
 
-  var actualLanguage = store.get('language') ? store.get('language') : "0";
+  var actualLanguage = store.get('language') ? store.get('language') : "1";
   var languages = [
     {name: "English", position: "0", baseProperties: {
       firstMenu: {

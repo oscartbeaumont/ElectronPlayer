@@ -1,6 +1,6 @@
 ## ElectronPlayer
 
-Um reprojeto do Electron PLayer, que parece ter sido abandonado
+Um reprojeto do Electron Player, que parece ter sido abandonado
 ![ElectronPlayer Menu](docs/ElectronPlayer.png)
 
 ```
