@@ -1,5 +1,5 @@
 {
-  "name": "electronplayer-portuguese",
+  "name": "ElectronPlayer",
   "version": "2.1.0",
   "description": "A stream player for Linux, now with portuguese language",
   "main": "src/main.js",

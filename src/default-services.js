@@ -26,7 +26,7 @@ module.exports = [
   },
   {
     name: 'Disney+',
-    logo: 'services/disney+.svg',
+    logo: 'services/disney+.png',
     url: 'https://www.disneyplus.com/',
     color: '#ffffff',
     style: {},
