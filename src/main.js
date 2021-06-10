@@ -20,11 +20,6 @@ let mainWindow; // Global Windows Object
 const menu = require('./menu');
 const store = new Store();
 
-//Load Widevine Only On Mac - Castlab Electron is used for all other platforms
-if (process.platform == 'darwin') {
-  require('electron-widevinecdm').load(app);
-}
-
 // Analytics endpoint
 const simpleAnalyticsEndpoint = "https://esa.otbeaumont.me/api";
 let defaultUserAgent;
@@ -38,6 +33,7 @@ async function createWindow() {
       nodeIntegration: false,
       nodeIntegrationInWorker: false,
       contextIsolation: false, // Must be disabled for preload script. I am not aware of a workaround but this *shouldn't* effect security
+      enableRemoteModule: true,
       plugins: true,
       preload: path.join(__dirname, 'client-preload.js')
     },

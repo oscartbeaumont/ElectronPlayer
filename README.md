@@ -1,4 +1,5 @@
 ## ElectronPlayer
+
 #### If you are experiencing issues playing DRM content using the Mac version please try the `v3.0.0` beta which can be found [here](https://electronplayer-beta.otbeaumont.me/)
 
 [![Build Status](https://travis-ci.org/oscartbeaumont/ElectronPlayer.svg?branch=master)](https://travis-ci.org/oscartbeaumont/ElectronPlayer)
@@ -71,12 +72,6 @@ Sorry in advance that build system currently to get the app working is a mess an
 ```bash
 git clone https://github.com/oscartbeaumont/ElectronPlayer.git
 cd ElectronPlayer/
-
-# For Linux
-ln -s package.linux.json package.json
-# For Mac
-ln -s package.mac.json package.json
-
 npm install
 npm start
 ```
