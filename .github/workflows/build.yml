@@ -1,31 +1,22 @@
-name: Build/release
-
-on: push
-
+name: Build
+on: [push]
 jobs:
-  release:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-
+  linux-build:
+    name: Build
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
-
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - uses: borales/actions-yarn@v2.3.0
         with:
-          node-version: '12'
-
-      - name: Build/release Electron app
-        uses: oof2510/action-electron-builder@28c28e2150a27ed2cdd8b167f41f0cfbb41b1939
+          cmd: install # will run `yarn install` command
+      - run: sudo apt-get install --no-install-recommends -y libopenjp2-tools rmp
+      - uses: borales/actions-yarn@v2.3.0
         with:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.github_token }}
-
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          cmd: build
+      - name: tar builds
+        run: tar czf dist.tar.gz --directory=dist/ .
+      - name: archive tar
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist.tar.gz
+          path: ./dist.tar.gz
