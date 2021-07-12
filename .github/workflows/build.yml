@@ -9,7 +9,8 @@ jobs:
       - uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install # will run `yarn install` command
-      - run: sudo apt-get install --no-install-recommends -y libopenjp2-tools rmp
+      - run: sudo apt update
+      - run: sudo apt install --no-install-recommends -y libopenjp2-tools rpm
       - uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build
