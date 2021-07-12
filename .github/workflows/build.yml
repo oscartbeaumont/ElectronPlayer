@@ -1,22 +1,31 @@
-name: Build
-on: [push]
+name: Build/release
+
+on: push
+
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: borales/actions-yarn@v2.3.0
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
         with:
-          cmd: install # will run `yarn install` command
-      - run: sudo apt install gnupg ca-certificates && sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list && sudo apt update && sudo apt-get install --no-install-recommends -y gcc-multilib g++-multilib libopenjp2-tools zip tar rpm wine mono-complete
-      - uses: borales/actions-yarn@v2.3.0
+          node-version: 10
+
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
         with:
-          cmd: build
-      - name: tar builds
-        run: tar czf dist.tar.gz --directory=dist/ .
-      - name: archive tar
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist.tar.gz
-          path: ./dist.tar.gz
+          # GitHub token, automatically provided to the action
+          # (No need to define this secret in the repo settings)
+          github_token: ${{ secrets.github_token }}
+
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
