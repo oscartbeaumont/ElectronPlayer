@@ -20,7 +20,7 @@ jobs:
           node-version: '12'
 
       - name: Build/release Electron app
-        uses: oof2510/action-electron-builder@ffdb558afc8d16321811cbfac4636a5ef2526108
+        uses: oof2510/action-electron-builder@28c28e2150a27ed2cdd8b167f41f0cfbb41b1939
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
