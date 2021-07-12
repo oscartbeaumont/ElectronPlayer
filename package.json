@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "test": "echo 'TODO: Tests'",
-    "build": "electron-builder -c build/electron-builder.yml -p never -wl"
+    "build": "electron-builder -c build/electron-builder.yml -p never"
   },
   "repository": "https://github.com/oscartbeaumont/ElectronPlayer.git",
   "author": "Oscar Beaumont <oscar@otbeaumont.me> (https://otbeaumont.me)",
