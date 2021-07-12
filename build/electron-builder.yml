@@ -12,5 +12,6 @@ linux:
   target:
     - AppImage
     - snap
+    - deb
 electronDownload:
   mirror: https://github.com/castlabs/electron-releases/releases/download/v

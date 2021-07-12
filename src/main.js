@@ -76,6 +76,16 @@ async function createWindow() {
     });
   }
 
+  // Load BetterTTV if Enabled
+  if (store.get('options.bttv')) {
+    await mainWindow.webContents.session.loadExtension(path.resolve(__dirname, '.') + "/exts/BTTV").then(({ id }) => {
+      console.log(`Loaded BTTV (ID: ${id})`);
+    }).catch((err) => {
+      console.error(`Error loading BTTV: ${err}`);
+    });
+  }
+  
+
   // Reset The Windows Size and Location
   let windowDetails = store.get('options.windowDetails');
   let relaunchWindowDetails = store.get('relaunch.windowDetails');

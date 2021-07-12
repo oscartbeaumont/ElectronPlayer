@@ -186,6 +186,29 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
             : false
         },
         {
+          label: 'BetterTTV *',
+          type: 'checkbox',
+          click(e) {
+            store.set('options.bttv', e.checked);
+
+            // Store details to remeber when relaunched
+            if (mainWindow.getURL() != '') {
+              store.set('relaunch.toPage', mainWindow.getURL());
+            }
+            store.set('relaunch.windowDetails', {
+              position: mainWindow.getPosition(),
+              size: mainWindow.getSize()
+            });
+
+            // Restart the app
+            app.relaunch();
+            app.quit();
+          },
+          checked: store.get('options.bttv')
+            ? store.get('options.bttv')
+            : false
+        },
+        {
           label: 'Start in Fullscreen',
           type: 'checkbox',
           click(e) {
