@@ -3,7 +3,7 @@ name: Release
 on: [push]
 
 jobs:
-  test:
+  build:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -56,6 +56,6 @@ jobs:
         run: yarn install
 
       - name: Build Electron app
-        uses: oof2510/action-electron-builder@5fbf3ff43b9796b05ee7cf93236bb4f8460863d6
+        uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.github_token }}
