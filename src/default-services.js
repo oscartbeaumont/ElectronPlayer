@@ -94,5 +94,13 @@ module.exports = [
     color: '#ffe600',
     style: {},
     permissions: []
+  },
+  {
+    name: 'Spotify',
+    logo: 'services/spotify.svg',
+    url: 'https://open.spotify.com',
+    color: '#1DB954',
+    style: {},
+    permissions: []
   }
 ];
