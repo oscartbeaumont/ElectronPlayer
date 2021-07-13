@@ -58,5 +58,14 @@ jobs:
       - name: Build Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
-          github_token: ${{ secrets.github_token }}
-          release: true
+          github_token: ${{ secrets.github_token }} 
+   
+      - name: gzip
+        run: yarn global add gzip-cli && gzip dist/* -o ${{ matrix.os }}.gz
+      
+      - name: Upload gzip
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ matrix.os }}.gz
+          path: ./*.gz
+     
