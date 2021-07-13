@@ -15,7 +15,7 @@ snap:
 linux:
   category:
     - Video
-    - Internet
+    - Network
   target:
     - AppImage
     - snap
