@@ -3,7 +3,7 @@
 #### If you are experiencing issues playing DRM content using the Mac version please try the `v3.0.0` beta which can be found [here](https://electronplayer-beta.otbeaumont.me/)
 
 [![ElectronPlayer](https://snapcraft.io/electronplayer/badge.svg)](https://snapcraft.io/electronplayer)
-[![Release](https://github.com/OOF2510/ElectronPlayer/actions/workflows/build.yml/badge.svg)](https://github.com/OOF2510/ElectronPlayer/actions/workflows/build.yml)
+[![Build](https://github.com/OOF2510/ElectronPlayer/actions/workflows/build.yml/badge.svg)](https://github.com/OOF2510/ElectronPlayer/actions/workflows/build.yml)
 
 An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch, Floatplane, Hulu, Amazon Prime Video And More. This is the successor to [Netflix-Desktop](https://github.com/oscartbeaumont/Netflix-Desktop).
 
