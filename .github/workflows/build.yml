@@ -58,36 +58,9 @@ jobs:
       - name: Build Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
-          github_token: ${{ secrets.github_token }}
+          github_token: ${{ secrets.github_token }} 
 
-      - name: Extract version
-        id: extract_version
-        uses: Saionaro/extract-package-version@v1.0.6
-
-      - name: Extract hash
-        id: extract_hash
-        shell: bash
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-
-      - name: Release
-        uses: ncipollo/release-action@v1.8.6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          allowUpdates: true
-          artifactErrorsFailBuild: false
-          commit: ${{ steps.extract_hash.outputs.sha_short }}
-          name: ${{ steps.extract_version.outputs.version }}
-          artifacts: |
-            dist/*.exe*
-            dist/*.msi*
-            dist/*.zip*
-            dist/*.dmg*
-            dist/*.deb*
-            dist/*.snap*
-            dist/*.AppImage*
-            dist/*.tar*
-
-      - name: Archive builds
+      - name: Upload builds
         uses: actions/upload-artifact@v2.2.4
         with:
           name: ${{ matrix.os }}
