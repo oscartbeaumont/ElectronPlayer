@@ -9,7 +9,7 @@
     "build": "electron-builder -c build/electron-builder.yml -p never"
   },
   "repository": "https://github.com/oof2510/ElectronPlayer.git",
-  "author": "OOF2510",
+  "author": "OOF2510 <64423517+OOF2510@users.noreply.github.com>",
   "license": "MIT",
   "devDependencies": {
     "electron": "https://github.com/castlabs/electron-releases#v12.0.11-wvvmp",
