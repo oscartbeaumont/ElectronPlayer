@@ -1,6 +1,6 @@
 {
   "name": "electronplayer",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "description": "An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch, Floatplane And More",
   "main": "src/main.js",
   "scripts": {
@@ -8,8 +8,8 @@
     "test": "echo 'TODO: Tests'",
     "build": "electron-builder -c build/electron-builder.yml -p never"
   },
-  "repository": "https://github.com/oscartbeaumont/ElectronPlayer.git",
-  "author": "Oscar Beaumont <oscar@otbeaumont.me> (https://otbeaumont.me)",
+  "repository": "https://github.com/oof2510/ElectronPlayer.git",
+  "author": "OOF2510",
   "license": "MIT",
   "devDependencies": {
     "electron": "https://github.com/castlabs/electron-releases#v12.0.11-wvvmp",
