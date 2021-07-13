@@ -70,7 +70,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           artifactErrorsFailBuild: false
-          commit: ${{ GITHUB_SHA }}
           name: ${{ steps.package-version.outputs.current-version}}_${{ matrix.os }}
           artifacts: |
             dist/*.exe*
