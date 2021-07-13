@@ -58,9 +58,31 @@ jobs:
       - name: Build Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
-          github_token: ${{ secrets.github_token }} 
+          github_token: ${{ secrets.github_token }}
 
-      - name: Upload builds
+      - name: get-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Release
+        uses: ncipollo/release-action@v1.8.6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          artifactErrorsFailBuild: false
+          commit: ${{ GITHUB_SHA }}
+          name: ${{ steps.package-version.outputs.current-version}}_${{ matrix.os }}
+          artifacts: |
+            dist/*.exe*
+            dist/*.msi*
+            dist/*.zip*
+            dist/*.dmg*
+            dist/*.deb*
+            dist/*.snap*
+            dist/*.AppImage*
+            dist/*.tar*
+
+      - name: Archive builds
         uses: actions/upload-artifact@v2.2.4
         with:
           name: ${{ matrix.os }}
