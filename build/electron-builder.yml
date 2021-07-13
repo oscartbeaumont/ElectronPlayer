@@ -7,7 +7,6 @@ nsis:
 win:
   target:
     - msi
-    - portable
     - nsis
 snap:
   plugs:
