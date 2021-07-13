@@ -14,7 +14,7 @@ jobs:
     env:
       ELECTRON_CACHE: ${{ github.workspace }}/.cache/electron
       ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
-      GIT_HASH=$(git rev-parse --short "$GITHUB_SHA")
+      GIT_HASH: $(git rev-parse --short "$GITHUB_SHA")
 
     steps:
       - name: Check out Git repository
