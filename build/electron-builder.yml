@@ -13,9 +13,7 @@ snap:
     - default
     - screen-inhibit-control
 linux:
-  category:
-    - Video
-    - Network
+  category: Video
   target:
     - AppImage
     - snap
