@@ -1,4 +1,5 @@
 appId: xyz.simp-bot.ElectronPlayer
+artifactName: ${name}-v${version}_${os}-${arch}.${ext}
 mac:
   category: public.app-category.entertainment
 nsis:
