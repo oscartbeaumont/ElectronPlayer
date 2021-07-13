@@ -1,4 +1,4 @@
-name: Release
+name: Build
 
 on: [push]
 
@@ -59,13 +59,15 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.github_token }} 
-   
-      - name: gzip
-        run: yarn global add gzip-cli && gzip dist/* -o ${{ matrix.os }}.gz
-      
-      - name: Upload gzip
+
+      - uses: papeloto/action-zip@v1
+        with:
+          files: dist/ 
+          dest: ${{ matrix.os }}.zip
+
+      - name: Upload dist
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ matrix.os }}.gz
-          path: ./*.gz
+          name: ${{ matrix.os }}.zip
+          path: ./*.zip
      
