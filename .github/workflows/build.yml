@@ -14,7 +14,6 @@ jobs:
     env:
       ELECTRON_CACHE: ${{ github.workspace }}/.cache/electron
       ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
-      GIT_HASH: $(git rev-parse --short "$GITHUB_SHA")
 
     steps:
       - name: Check out Git repository
@@ -64,14 +63,19 @@ jobs:
       - name: Extract version
         id: extract_version
         uses: Saionaro/extract-package-version@v1.0.6
-      
+
+      - name: Extract hash
+        id: extract_hash
+        shell: bash
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
       - name: Release
         uses: ncipollo/release-action@v1.8.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           artifactErrorsFailBuild: false
-          commit: ${{ GIT_HASH }}
+          commit: ${{ steps.extract_hash.outputs.sha_short }}
           name: ${{ steps.extract_version.outputs.version }}
           artifacts: |
             dist/*.exe*
