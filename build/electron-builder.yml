@@ -1,8 +1,10 @@
-appId: me.otbeaumont.ElectronPlayer
+appId: xyz.simp-bot.ElectronPlayer
 mac:
   category: public.app-category.entertainment
 win:
-  target: msi
+  target:
+    - msi
+    - portable
 snap:
   plugs:
     - default
@@ -13,5 +15,8 @@ linux:
     - AppImage
     - snap
     - deb
+  icon: build/512x512.png
+  
 electronDownload:
-  mirror: https://github.com/castlabs/electron-releases/releases/download/v
+  mirror: https://github.com/castlabs/electron-releases/releases/download/
+  
