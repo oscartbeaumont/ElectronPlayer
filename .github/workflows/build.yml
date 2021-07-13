@@ -60,17 +60,17 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
 
-      - name: get-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
-
+      - name: Extract version
+        id: extract_version
+        uses: Saionaro/extract-package-version@v1.0.6
+      
       - name: Release
         uses: ncipollo/release-action@v1.8.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           allowUpdates: true
           artifactErrorsFailBuild: false
-          name: ${{ steps.package-version.outputs.current-version}}_${{ matrix.os }}
+          name: ${{ steps.extract_version.outputs.version }}
           artifacts: |
             dist/*.exe*
             dist/*.msi*
