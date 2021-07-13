@@ -2,13 +2,10 @@ appId: xyz.simp-bot.ElectronPlayer
 artifactName: ${name}-v${version}_${os}-${arch}.${ext}
 mac:
   category: public.app-category.entertainment
-nsis:
-  oneClick: false
-  allowToChangeInstallationDirectory: true
 win:
   target:
     - msi
-    - nsis
+    - portable
 snap:
   plugs:
     - default
