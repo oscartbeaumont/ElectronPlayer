@@ -1,16 +1,21 @@
 appId: xyz.simp-bot.ElectronPlayer
 mac:
   category: public.app-category.entertainment
+nsis:
+  allowToChangeInstallationDirectory: true
 win:
   target:
     - msi
     - portable
+    - nsis
 snap:
   plugs:
     - default
     - screen-inhibit-control
 linux:
-  category: Video
+  category:
+    - Video
+    - Internet
   target:
     - AppImage
     - snap
