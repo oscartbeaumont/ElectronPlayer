@@ -2,6 +2,7 @@ appId: xyz.simp-bot.ElectronPlayer
 mac:
   category: public.app-category.entertainment
 nsis:
+  oneClick: false
   allowToChangeInstallationDirectory: true
 win:
   target:
