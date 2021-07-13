@@ -65,11 +65,11 @@ jobs:
         with:
           name: ${{ matrix.os }}
           path: |
-            dist/*.exe*
-            dist/*.msi*
-            dist/*.zip*
-            dist/*.dmg*
-            dist/*.deb*
-            dist/*.snap*
-            dist/*.AppImage*
-            dist/*.tar*
+            dist/*v*.exe*
+            dist/*v*.msi*
+            dist/*v*.zip*
+            dist/*v*.dmg*
+            dist/*v*.deb*
+            dist/*v*.snap*
+            dist/*v*.AppImage*
+            dist/*v*.tar*
