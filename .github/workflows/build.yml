@@ -61,15 +61,15 @@ jobs:
           github_token: ${{ secrets.github_token }} 
 
       - name: Upload builds
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2.2.4
         with:
           name: ${{ matrix.os }}
           path: |
-            dist/*.exe
-            dist/*.msi
-            dist/*.zip
+            dist/*.exe*
+            dist/*.msi*
+            dist/*.zip*
             dist/*.dmg*
-            dist/*.deb
-            dist/*.snap
-            dist/*.AppImage
+            dist/*.deb*
+            dist/*.snap*
+            dist/*.AppImage*
             dist/*.tar*
