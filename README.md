@@ -50,6 +50,10 @@ snap install electronplayer
 
 Download the AppImage from the [Github Releases here](https://github.com/oscartbeaumont/ElectronPlayer/releases).
 
+## Arch Linux AUR
+
+There is an unofficial package on the Arch Linux User Repository provided by [@gardotd426](https://github.com/gardotd426)
+
 # Contributors
 
 A huge thanks to the following people for contributing and helping shape this project.
