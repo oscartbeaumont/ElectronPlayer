@@ -198,6 +198,12 @@ async function createWindow() {
   // Inject Header Script On Page Load If In Frameless Window
   mainWindow.webContents.on('dom-ready', broswerWindowDomReady);
 
+  // Force links with target="_blank" to open internally (in current window)
+  mainWindow.webContents.on('new-window', (e, url) => {
+    e.preventDefault();
+    mainWindow.loadURL(url);
+  });
+
   // Emitted when the window is closed.
   mainWindow.on('closed', mainWindowClosed);
 
