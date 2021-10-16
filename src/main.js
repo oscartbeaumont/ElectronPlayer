@@ -195,6 +195,14 @@ async function createWindow() {
     }
   });
 
+  // Force links with target="_blank" to open internally (in current window)
+  if (store.get('options.openLinksInternally')) {
+    mainWindow.webContents.on('new-window', (e, url) => {
+      e.preventDefault();
+      mainWindow.loadURL(url);
+    });
+  }
+
   // Inject Header Script On Page Load If In Frameless Window
   mainWindow.webContents.on('dom-ready', broswerWindowDomReady);
 

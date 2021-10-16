@@ -196,6 +196,16 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
             : false
         },
         {
+          label: 'Force Open Links Internally',
+          type: 'checkbox',
+          click(e) {
+            store.set('options.openLinksInternally', e.checked);
+          },
+          checked: store.get('options.openLinksInternally')
+          ? store.get('options.openLinksInternally')
+          : false
+        },
+        {
           label: 'Enabled Services',
           submenu: enabledServicesMenuItems
         },
