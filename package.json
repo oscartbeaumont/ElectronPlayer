@@ -1,1 +1,23 @@
-package.linux.json
+{
+  "name": "ElectronPlayer",
+  "version": "2.2.0",
+  "description": "A stream player for Linux, now with portuguese language",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo 'TODO: Tests'",
+    "build": "electron-builder -c build/electron-builder.yml -p never"
+  },
+  "repository": "https://github.com/ToMattBan/ElectronPlayer.git",
+  "author": "ToMatt <souaquelecleyton@gmail.com>",
+  "devDependencies": {
+    "electron": "https://github.com/castlabs/electron-releases#v12.0.11-wvvmp",
+    "electron-builder": "^22.3.2"
+  },
+  "dependencies": {
+    "@cliqz/adblocker-electron": "^1.5.0",
+    "electron-prompt": "^1.5.1",
+    "electron-store": "^5.1.1",
+    "node-fetch": "^2.6.0"
+  }
+}

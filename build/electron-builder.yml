@@ -5,10 +5,12 @@ win:
   target: msi
 snap:
   plugs:
-  - default
-  - screen-inhibit-control
+    - default
+    - screen-inhibit-control
 linux:
   category: Video
   target:
-  - AppImage
-  - snap
+    - AppImage
+    - snap
+electronDownload:
+  mirror: https://github.com/castlabs/electron-releases/releases/download/v
