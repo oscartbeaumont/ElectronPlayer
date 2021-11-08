@@ -1,0 +1,116 @@
+{
+    "en": {
+        "name": "English",
+        "code": "en",
+        "baseProperties": {
+            "firstMenu": {
+                "created": "Created By Oscar Beaumont",
+                "quit": "Quit ElectronPlayer",
+                "translated": "Translated (ptBr) by ToMattBan"
+            },
+            "servicesMenu": {
+                "services": "Services",
+                "menu": "Menu",
+                "customUrl": "Custom Url"
+            },
+            "settingsMenu": {
+                "settings": "Settings",
+                "alwaysTop": "Always On Top",
+                "framWindow": "Frameless Window *",
+                "remWindowDetail": "Remember Window Details",
+                "pip": "Picture In Picture (Mac Only) *",
+                "lang": "Laguage *",
+                "adblock": "Adblock *",
+                "fullscreen": "Start in Fullscreen",
+                "enServices": "Enabled Services",
+                "defServices": "Default Service",
+                "menu": "Menu",
+                "lastOpen": "Last Opened Page",
+                "editConfig": "Edit Config",
+                "resetAll": "Reset all settings *",
+                "restartApp": "* Means App Will Restart"
+            },
+            "editMenu": {
+                "edit": "Edit",
+                "undo": "Undo",
+                "redo": "Redo",
+                "cut": "Cut",
+                "copy": "Copy",
+                "paste": "Paste",
+                "pasteStyle": "Paste and Match Style",
+                "del": "Delete",
+                "selAll": "Select All"
+            },
+            "devMenu": {
+                "dev": "Developer",
+                "reload": "Reload",
+                "devTools": "Toggle Developer Tools",
+                "resZoom": "Reset Zoom",
+                "zoomIn": "Zoom in",
+                "zoomOut": "Zoom out",
+                "fullScreen": "Toggle Fullscreen"
+            },
+            "helpMenu": {
+                "help": "Help",
+                "moreInfo": "More Information"
+            }
+        }
+    },
+    "pt-BR": {
+        "name": "Português Brasil",
+        "code": "pt-BR",
+        "baseProperties": {
+            "firstMenu": {
+                "created": "Criado por Oscar Beaumont",
+                "quit": "Fechar ElectronPlayer",
+                "translated": "Traduzido (ptBr) por ToMattBan"
+            },
+            "servicesMenu": {
+                "services": "Serviços",
+                "menu": "Menu",
+                "customUrl": "Url Personalizada"
+            },
+            "settingsMenu": {
+                "settings": "Configurações",
+                "alwaysTop": "Sempre no Topo",
+                "framWindow": "Janela sem borda *",
+                "remWindowDetail": "Lembrar Detalhes da Janela",
+                "pip": "Picture In Picture (Apenas Mac) *",
+                "lang": "Idioma *",
+                "adblock": "Adblock *",
+                "fullscreen": "Iniciar em Tela Cheia",
+                "enServices": "Serviços Habilitados",
+                "defServices": "Serviço Padrão",
+                "menu": "Menu",
+                "lastOpen": "Última Página Aberta",
+                "editConfig": "Editar Configurações",
+                "resetAll": "Redefinir Todas as Configurações *",
+                "restartApp": "* Significa que o App Reiniciará"
+            },
+            "editMenu": {
+                "edit": "Editar",
+                "undo": "Desfazer",
+                "redo": "Refazer",
+                "cut": "Recortar",
+                "copy": "Copiar",
+                "paste": "Colar",
+                "pasteStyle": "Colar com Estilo",
+                "del": "Deletar",
+                "selAll": "Selecionar Tudo"
+            },
+            "devMenu": {
+                "dev": "Desenvolvedor",
+                "reload": "Recarregar",
+                "devTools": "Alternar Modo Desenvolvedor",
+                "resZoom": "Resetar Zoom",
+                "zoomIn": "Aumentar Zoom",
+                "zoomOut": "Diminuir Zoom",
+                "fullScreen": "Alternar Tela Cheia"
+            },
+            "helpMenu": {
+                "help": "Ajuda",
+                "moreInfo": "Mais Informações"
+            }
+        }
+    }
+}

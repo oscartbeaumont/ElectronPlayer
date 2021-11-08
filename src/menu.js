@@ -2,6 +2,7 @@ const { Menu, shell } = require('electron');
 const prompt = require('electron-prompt');
 const path = require('path');
 const fs = require('fs');
+const languages = require("./translations.json");
 
 module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
   var servicesMenuItems = [];
@@ -25,8 +26,8 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
       label: service.name,
       type: 'checkbox',
       checked: store.get('options.defaultService')
-          ? store.get('options.defaultService') == service.name
-          : false,
+        ? store.get('options.defaultService') == service.name
+        : false,
       click(e) {
         e.menu.items.forEach(e => {
           if (!(e.label === service.name)) e.checked = false;
@@ -41,7 +42,7 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
       type: 'checkbox',
       checked: !service.hidden,
       click() {
-        if(service._defaultService) {
+        if (service._defaultService) {
           let currServices = store.get('services');
           currServices.push({
             name: service.name,
@@ -60,123 +61,15 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
     }));
   }
 
-  var actualLanguage = store.get('language') ? store.get('language') : "1";
-  var languages = [
-    {name: "English", position: "0", baseProperties: {
-      firstMenu: {
-        created: "Created By Oscar Beaumont",
-        quit: "Quit ElectronPlayer",
-        translated: "Translated (ptBr) by ToMattBan",
-      },
-      servicesMenu: {
-        services: "Services",
-        menu: "Menu",
-        customUrl: "Custom Url",
-      },
-      settingsMenu: {
-        settings: "Settings",
-        alwaysTop: "Always On Top",
-        framWindow: "Frameless Window *",
-        remWindowDetail: "Remember Window Details",
-        pip: "Picture In Picture (Mac Only) *",
-        lang: "Laguage *",
-        adblock: "Adblock *",
-        fullscreen: "Start in Fullscreen",
-        enServices: "Enabled Services",
-        defServices: "Default Service",
-        menu: "Menu",
-        lastOpen: "Last Opened Page",
-        editConfig: "Edit Config",
-        resetAll: "Reset all settings *",
-        restartApp: "* Means App Will Restart",
-      },
-      editMenu: {
-        edit: "Edit",
-        undo: "",
-        redo: "",
-        cur: "",
-        copy: "",
-        parte: "",
-        pasteStyle: "",
-        del: "",
-        selAll: "",
-      },
-      devMenu: {
-        dev: "Developer",
-        reload: "Reload",
-        devTools: "Toggle Developer Tools",
-        resZoom: "",
-        zoomIn: "",
-        zoomOut: "",
-        fullScreen: "",
-      },
-      helpMenu: {
-        help: "Help",
-        moreInfo: "More Information",
-      }
-    }}, 
-    {name: "Português Brasil", position: "1", baseProperties: {
-      firstMenu: {
-        created: "Criado por Oscar Beaumont",
-        quit: "Fechar ElectronPlayer",
-        translated: "Traduzido (ptBr) por ToMattBan",
-      },
-      servicesMenu: {
-        services: "Serviços",
-        menu: "Menu",
-        customUrl: "Url Personalizada",
-      },
-      settingsMenu: {
-        settings: "Configurações",
-        alwaysTop: "Sempre no Topo",
-        framWindow: "Janela sem borda *",
-        remWindowDetail: "Lembrar Detalhes da Janela",
-        pip: "Picture In Picture (Apenas Mac) *",
-        lang: "Idioma *",
-        adblock: "Adblock *",
-        fullscreen: "Iniciar em Tela Cheia",
-        enServices: "Serviços Habilitados",
-        defServices: "Serviço Padrão",
-        menu: "Menu",
-        lastOpen: "Última Página Aberta",
-        editConfig: "Editar Configurações",
-        resetAll: "Redefinir Todas as Configurações *",
-        restartApp: "* Significa que o App Reiniciará",
-      },
-      editMenu: {
-        edit: "Editar",
-        undo: "",
-        redo: "",
-        cur: "",
-        copy: "",
-        parte: "",
-        pasteStyle: "",
-        del: "",
-        selAll: "",
-      },
-      devMenu: {
-        dev: "Developer",
-        reload: "Reload",
-        devTools: "Toggle Developer Tools",
-        resZoom: "",
-        zoomIn: "",
-        zoomOut: "",
-        fullScreen: "",
-      },
-      helpMenu: {
-        help: "Ajuda",
-        moreInfo: "Mais Informações",
-      }
-    }}
-  ];
-  var languagesChoice = [];
+  var actualLanguage = store.get('language') ? store.get('language') : app.getLocale();
+  var languageKeys = Object.keys(languages)
 
-  languagesChoice = languages.map(language => ({
-    label: language.name,
+  var languagesChoice = languageKeys.map(language => ({
+    label: languages[language].name,
     type: 'radio',
-    checked: language.position == actualLanguage ? true : false,
+    checked: languages[language].code == actualLanguage ? true : false,
     click() {
-      store.set('language', language.position);
+      store.set('language', languages[language].code);
       app.relaunch();
       app.exit();
     }
@@ -218,22 +111,22 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
               title: 'Open Custom URL',
               label: 'URL:',
               inputAttrs: {
-                  type: 'url',
-                  placeholder: 'http://example.org'
+                type: 'url',
+                placeholder: 'http://example.org'
               },
               alwaysOnTop: true
-          })
-          .then(inputtedURL => {
-            if (inputtedURL != null) {
-              if(inputtedURL == '') {
-                inputtedURL = 'http://example.org';
-              }
+            })
+              .then(inputtedURL => {
+                if (inputtedURL != null) {
+                  if (inputtedURL == '') {
+                    inputtedURL = 'http://example.org';
+                  }
 
-              console.log('Opening Custom URL: ' + inputtedURL);
-              mainWindow.loadURL(inputtedURL);
-            }
-          })
-          .catch(console.error);
+                  console.log('Opening Custom URL: ' + inputtedURL);
+                  mainWindow.loadURL(inputtedURL);
+                }
+              })
+              .catch(console.error);
           }
         }
       ].concat(servicesMenuItems)
@@ -384,15 +277,15 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
     {
       label: languages[actualLanguage].baseProperties.editMenu.edit,
       submenu: [
-        { role: 'undo' },
-        { role: 'redo' },
+        { role: 'undo', label: languages[actualLanguage].baseProperties.editMenu.undo },
+        { role: 'redo', label: languages[actualLanguage].baseProperties.editMenu.redo },
         { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
-        { role: 'pasteandmatchstyle' },
-        { role: 'delete' },
-        { role: 'selectall' }
+        { role: 'cut', label: languages[actualLanguage].baseProperties.editMenu.cut },
+        { role: 'copy', label: languages[actualLanguage].baseProperties.editMenu.copy },
+        { role: 'paste', label: languages[actualLanguage].baseProperties.editMenu.paste },
+        { role: 'pasteandmatchstyle', label: languages[actualLanguage].baseProperties.editMenu.pasteStyle },
+        { role: 'delete', label: languages[actualLanguage].baseProperties.editMenu.del },
+        { role: 'selectall', label: languages[actualLanguage].baseProperties.editMenu.selAll }
       ]
     },
     {
@@ -417,19 +310,19 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
           type: 'separator'
         },
         {
-          role: 'resetzoom'
+          role: 'resetzoom', label: languages[actualLanguage].baseProperties.devMenu.resZoom
         },
         {
-          role: 'zoomin'
+          role: 'zoomin', label: languages[actualLanguage].baseProperties.devMenu.zoomIn
         },
         {
-          role: 'zoomout'
+          role: 'zoomout', label: languages[actualLanguage].baseProperties.devMenu.zoomOut
         },
         {
           type: 'separator'
         },
         {
-          role: 'togglefullscreen'
+          role: 'togglefullscreen', label: languages[actualLanguage].baseProperties.devMenu.fullScreen
         }
       ]
     },
@@ -440,7 +333,7 @@ module.exports = (store, services, mainWindow, app, defaultUserAgent) => {
           label: languages[actualLanguage].baseProperties.helpMenu.moreInfo,
           click() {
             shell.openExternal(
-              'http://github.com/oscartbeaumont/ElectronPlayer'
+              'https://github.com/ToMattBan/ElectronPlayer'
             );
           }
         }
