@@ -42,6 +42,14 @@ module.exports = [
     permissions: []
   },
   {
+    name: 'HBO Max',
+    logo: 'services/hbomax.jpeg',
+    url: 'https://play.hbomax.com/',
+    color: '#5b2ddb',
+    style: {},
+    permissions: [],
+  },
+  {
     name: 'Hulu',
     hidden: true,
     logo: 'services/hulu.svg',
