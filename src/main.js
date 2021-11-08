@@ -21,6 +21,7 @@ const menu = require('./menu');
 const store = new Store();
 
 // Analytics endpoint
+const simpleAnalyticsEndpoint = "https://esa.otbeaumont.me/api";
 let defaultUserAgent;
 
 async function createWindow() {
@@ -242,6 +243,23 @@ async function createWindow() {
       unique = true;
     }
   }
+
+  fetch(simpleAnalyticsEndpoint, {
+      method: 'POST',
+      headers: {
+        "User-Agent": "ElectronPlayer",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+          url: "https://electronplayer.otbeaumont.me/" + store.get('version'),
+          ua: mainWindow.webContents.userAgent,
+          width: mainWindow.getSize()[0],
+          unique: unique,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          urlReferrer: process.platform
+      })
+  })
 }
 
 // This method is called when the broswer window's dom is ready

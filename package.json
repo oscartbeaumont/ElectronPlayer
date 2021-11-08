@@ -1,15 +1,16 @@
 {
-  "name": "ElectronPlayer-portuguese",
-  "version": "2.3.0",
-  "description": "A stream player for Linux, now with portuguese language",
+  "name": "electronplayer",
+  "version": "2.0.8",
+  "description": "An Electron Based Web Video Services Player. Supporting Netflix, Youtube, Twitch, Floatplane And More",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo 'TODO: Tests'",
     "build": "electron-builder -c build/electron-builder.yml -p never"
   },
-  "repository": "https://github.com/ToMattBan/ElectronPlayer.git",
-  "author": "ToMatt <souaquelecleyton@gmail.com>",
+  "repository": "https://github.com/oscartbeaumont/ElectronPlayer.git",
+  "author": "Oscar Beaumont <oscar@otbeaumont.me> (https://otbeaumont.me)",
+  "license": "MIT",
   "devDependencies": {
     "electron": "https://github.com/castlabs/electron-releases#v12.0.11-wvvmp",
     "electron-builder": "^22.3.2"
